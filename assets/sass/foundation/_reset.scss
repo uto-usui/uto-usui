@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-style: normal;
+  font-weight: inherit;
+  text-decoration: none;
+  vertical-align: baseline;
+  list-style: none;
+  border: 0;
+}
+
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  font-size: 62.5%;
+  font-weight: normal;
+}
+
+body {
+  position: relative;
+  width: 100%;
+  line-height: 1;
+  text-align: center;
+  word-wrap: break-word;
+  text-size-adjust: 100%;
+  font-kerning: normal;
+}
+
+article,
+aside,
+dialog,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section {
+  display: block;
+}
+
+audio,
+canvas,
+video,
+progress {
+  display: inline-block;
+}
+
+canvas {
+  vertical-align: bottom;
+}
+
+br,
+hr {
+  display: block;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+input,
+select {
+  vertical-align: middle;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+button,
+input {
+  overflow: visible;
+}
+
+button,
+select {
+  text-transform: none;
+  cursor: pointer;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+textarea {
+  overflow: auto;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+[type="search"] {
+  -webkit-appearance: textfield;
+  outline-offset: -2px;
+}
+
+template {
+  display: none;
+}
+
+[hidden] {
+  display: none;
+}
+
+a {
+  cursor: pointer;
+}
+
+img {
+  vertical-align: bottom;
+}
