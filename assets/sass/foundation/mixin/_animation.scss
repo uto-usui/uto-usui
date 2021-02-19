@@ -1,0 +1,66 @@
+@mixin hardwareAccel() {
+  // Improve performance on mobile/tablet devices
+  transform: translateZ(0);
+}
+
+@mixin improveAntiAlias() {
+  // Improve aliasing on mobile/tablet devices
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+
+@mixin fontSmooth() {
+  backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+@mixin forceBlockLevel() {
+  // Transforms need to be block-level to work
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@mixin hacks() {
+  @include forceBlockLevel();
+  @include hardwareAccel();
+  @include improveAntiAlias();
+  @include fontSmooth();
+}
+
+@mixin waitAnimate($options: ()) {
+  $options: map-merge(( animationname: waitanimate, duration: 1, waittime: 0, timingfunction: linear, iterationcount: infinite), $options);
+  $name: map-get($options, animationname);
+  $kf: map-get($options, keyframes);
+  $kfLength: length($kf);
+  $duration: map-get($options, duration);
+  $waitTime: map-get($options, waittime);
+  $timingFunction: map-get($options, timingfunction);
+  $iterationCount: map-get($options, iterationcount);
+  $counter: 1; // index of 'each'
+
+  @keyframes #{$name} {
+    @each $frame,
+      $prop in $kf {
+      #{$frame * $duration / ($duration + $waitTime)}% {
+        @each $k,
+          $v in $prop {
+          #{$k}: #{$v};
+        }
+      }
+      // if last in loop and waitTime is not 0, add the last frame as 100% (this is what creates the pause)
+      @if $counter==$kfLength and $waitTime > 0 {
+        100% {
+          @each $k,
+            $v in $prop {
+            #{$k}: #{$v};
+          }
+        }
+      }
+      $counter: $counter+1;
+    }
+  }
+
+  .#{$name} {
+    animation: #{$name} #{$duration}s #{$timingFunction} #{$iterationCount};
+  }
+}
