@@ -1,0 +1,243 @@
+// https://github.com/ShiftbrainStd/harmonic-modular-scale
+// https://standard.shiftbrain.com/blog/harmonic-modular-scale-tools
+// 👤 Shiftbrain Standard Design Unit (https://standard.shiftbrain.com/)
+// Twitter: @ShiftbrainStd
+// Github: @ShiftbrainStd
+
+@function trunc($x) {
+  @return if($x < 0, ceil($x), floor($x));
+}
+
+$scale-factor: 8 !default;
+$base-rem: 1rem !default;
+$line-height-unit: 0.25rem !default;
+$use-calc: true !default;
+
+/// Returns a list with font-size and line-height from typographic scale values based on harmonic progression
+///
+/// @param {number} $font-size-degree [0] - An integer indicating the font size in the harmonic scale. The returned value will be relative to the base font size.
+/// @param {number} $line-height-degree [null] - The increments of line height relative to the minimum height that can contain the current font size. It must be an integer.
+/// @returns {list}
+/// @example
+///   $sizes: get-sizes(3, 2);
+/// @output
+///   $sizes === (calc(1rem * 8 / 5), calc(1em * 45 / 32));
+///
+@function get-sizes($font-size-degree, $line-height-degree: null) {
+  @if type-of($font-size-degree) == list {
+    $line-height-degree: nth($font-size-degree, 2);
+    $font-size-degree: nth($font-size-degree, 1);
+  }
+
+  $sizes: (get-font-size($font-size-degree));
+
+  @if type-of($line-height-degree) == number {
+    $sizes: append(
+      $sizes,
+      get-line-height(
+        $font-size-degree: $font-size-degree,
+        $line-height-degree: $line-height-degree,
+        $as-line-height: true,
+      )
+    );
+  }
+
+  @return $sizes;
+}
+
+/// Returns a font-size from typographic scale values based on harmonic progression
+///
+/// @param {number} $font-size-degree [0] - An integer indicating the font size in the harmonic scale. The returned value will be relative to the base font size.
+/// @returns {number}
+/// @example
+///   $font-size: get-font-size(3);
+/// @output
+///   $font-size === calc(1rem * 8 / 5);
+///
+@function get-font-size($font-size-degree) {
+  $font-size-degree: trunc($font-size-degree);
+  $fs-n: $scale-factor;
+  $fs-d: $scale-factor - $font-size-degree;
+
+  $font-size: 0;
+
+  @if $font-size-degree == 0 {
+    $font-size: $base-rem;
+  }
+
+  @else if $use-calc {
+    $font-size: calc(#{$base-rem} * #{$fs-n} / #{$fs-d});
+  }
+
+  @else {
+    $font-size: $base-rem * $fs-n / $fs-d;
+  }
+
+  @return $font-size;
+}
+
+/// Returns a line-height value based on a font-size typographic scale value
+///
+/// @param {number} $font-size-degree [0] - An integer indicating the font size in the harmonic scale. The returned value will be relative to the base font size.
+/// @param {number} $line-height-degree [0] - The increments of line height relative to the minimum height that can contain the current font size. It must be an integer.
+/// @param {number} $lines [1] - The number to multiply the line height for.
+/// @param {boolean} $as-line-height [false] - If true, returns the value relative to the current font-size. If false, returns the value relative to the root font size.
+/// @returns {string|number}
+///
+//$line-height-degree	出力されるline-height	px値
+// 3	calc(1em * 70 / 32)	28px
+// 2	calc(1em * 60 / 32)	24px
+// 1	calc(1em * 50 / 32)	20px
+// 0	calc(1em * 40 / 32)	16px
+//-1  calc(1em * 30 / 32)	12px
+//$theme-sizes-body: (0, 3);
+//$theme-sizes-h2: (2, 2);
+//
+//  body {
+//    @include hms.sizes($theme-sizes-body);
+//  }
+//
+//  h2 {
+//    @include hms.sizes($theme-sizes-h2);
+//    margin-top: hms.get-line-height($theme-sizes-body, 2);
+//    margin-bottom: hms.get-line-height($theme-sizes-body);
+//  }
+//
+//  body {
+//    font-size: 1rem;
+//    line-height: calc(1em * 56 / 32);     /* 28px */
+//  }
+//
+//  h2 {
+//    font-size: calc(1rem * 8 / 6);
+//    line-height: calc(1em * 48 / 32);
+//    margin-top: calc(1rem * 56 / 32 * 2); /* 56px */
+//    margin-bottom: calc(1rem * 56 / 32);  /* 28px */
+//  }
+@function get-line-height(
+  $font-size-degree,
+  $line-height-degree: null,
+  $lines: 1,
+  $as-line-height: false
+) {
+  @if type-of($font-size-degree) == list {
+    @if length($font-size-degree) == 3 {
+      $lines: nth($font-size-degree, 3);
+    }
+
+    @if length($font-size-degree) == 2 and $line-height-degree {
+      $lines: $line-height-degree;
+    }
+
+    $line-height-degree: nth($font-size-degree, 2);
+    $font-size-degree: nth($font-size-degree, 1);
+  }
+
+  @if type-of($line-height-degree) != number {
+    @error "$line-height-degree must be a number. Received: #{$line-height-degree}";
+  }
+
+  $font-size-degree: trunc($font-size-degree);
+  $line-height-degree: trunc($line-height-degree);
+  $lines: trunc($lines);
+  $fs-n: $scale-factor;
+  $fs-d: $scale-factor - $font-size-degree;
+  $font-size: $base-rem * $fs-n / $fs-d;
+  $base-line-height-multiple: 1;
+
+  @while $line-height-unit * $base-line-height-multiple < $font-size {
+    $base-line-height-multiple: $base-line-height-multiple + 1;
+  }
+
+  $lh-n: ($base-line-height-multiple + $line-height-degree) * $fs-d;
+  $lh-d: ($base-rem / $line-height-unit) * $fs-n;
+
+  @if $as-line-height {
+    @if $lh-n == $lh-d {
+      @return 1;
+    }
+
+    @if $use-calc {
+      @return calc(1em * #{$lh-n} / #{$lh-d});
+    }
+
+    @return $lh-n / $lh-d;
+  }
+
+  @if $use-calc {
+    @if $lh-n == $lh-d {
+      @if $fs-n == $fs-d {
+        @return $base-rem * $lines;
+      }
+
+      @if $lines != 1 {
+        @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d} * #{$lines});
+      }
+
+      @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d});
+    }
+
+    @if $fs-n == $fs-d {
+      @if $lines != 1 {
+        @return calc(#{$base-rem} * #{$lh-n} / #{$lh-d} * #{$lines});
+      }
+
+      @return calc(#{$base-rem} * #{$lh-n} / #{$lh-d});
+    }
+
+    @if $lines != 1 {
+      // prettier-ignore
+      @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d} * #{$lh-n} / #{$lh-d} * #{$lines});
+    }
+
+    // prettier-ignore
+    @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d} * #{$lh-n} / #{$lh-d});
+  }
+
+  @return $font-size * $lh-n / $lh-d * $lines;
+}
+
+/// Sets font-size in type scale based on harmonic progression
+///   and line-height based on vertical grid
+///
+/// @param {number} $font-size-degree [0] - The position of font size in scale relative to the base font size. It must be an integer.
+/// @param {number} $line-height-degree [null] - The increments of line height relative to the minimum height that can contain the current font size. It must be an integer.
+/// @example
+///   h1 {
+///     @include sizes(3, 2);
+///   }
+/// @output
+///   h1 {
+///     font-size: calc(1rem * 8 / 5);
+///     line-height: calc(1em * 45 / 32);
+///   }
+///
+//  $font-size-degree	出力されるfont-size	px値
+//   7	calc(1rem * 8 / 1)	 128px
+//   6	calc(1rem * 8 / 2)	64px
+//   5	calc(1rem * 8 / 3)	42.666px
+//   4	calc(1rem * 8 / 4)	32px
+//   3	calc(1rem * 8 / 5)	25.6px
+//   2	calc(1rem * 8 / 6)	21.333px
+//   1	calc(1rem * 8 / 7)	18.286px
+//   0	1rem	16px
+//  -1	calc(1rem * 8 / 9)	14.222px
+//  -2	calc(1rem * 8 / 10)	12.8px
+//  -3	calc(1rem * 8 / 11)	11.636px
+//  -4	calc(1rem * 8 / 12)	10.667px
+//
+//  $line-height-degree	出力されるline-height	px値
+//
+@mixin sizes($font-size-degree, $line-height-degree: null) {
+  $sizes: get-sizes($font-size-degree, $line-height-degree);
+
+  font-size: nth($sizes, 1);
+
+  @if length($sizes) == 2 {
+    line-height: nth($sizes, 2);
+  }
+}
+
+@function space-scalar($scale: 1) {
+  @return $scale * 1rem / 4;
+}
