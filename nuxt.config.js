@@ -137,14 +137,11 @@ module.exports = {
    * // https://github.com/Developmint/nuxt-webfontloader
    */
   webfontloader: {
-    typekit: {
-      id: 'egv4ofo',
-    },
+    //
   },
 
   router: {
-    base:
-      process.env.NODE_ENV === 'production' ? '/vol39-the-world-in-2021/' : '/',
+    base: process.env.BASE_URL || '/',
   },
 
   /*
