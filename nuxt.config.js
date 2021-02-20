@@ -189,6 +189,17 @@ module.exports = {
         exclude: /(node_modules)/,
       })
 
+      config.output.globalObject = 'this'
+
+      config.module.rules.unshift({
+        test: /\.worker\.ts$/,
+        loader: 'worker-loader',
+      })
+      config.module.rules.unshift({
+        test: /\.worker\.js$/,
+        loader: 'worker-loader',
+      })
+
       // import alias
       config.resolve.alias.Sass = path.resolve(__dirname, './assets/sass/')
       config.resolve.alias.Js = path.resolve(__dirname, './assets/js/')
