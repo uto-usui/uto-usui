@@ -1,10 +1,10 @@
 html {
   width: 100%;
   height: 100%;
-  font-size: calc(100vw * 10 / 375);
+  font-size: calc(100vw * 16 / 375);
 
   @include desktop {
-    font-size: calc(100vw * 10 / 1440);
+    font-size: calc(100vw * 16 / 1200);
   }
 }
 
