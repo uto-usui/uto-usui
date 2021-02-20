@@ -152,6 +152,20 @@ module.exports = {
       scss,
     },
 
+    babel: {
+      presets({ isServer }) {
+        return [
+          [require.resolve('babel-preset-vca-jsx')],
+          [
+            require.resolve('@nuxt/babel-preset-app'),
+            {
+              targets: isServer ? { node: 'current' } : { ie: '11' },
+            },
+          ],
+        ]
+      },
+    },
+
     terser: {
       terserOptions: {
         // disable console on prod
