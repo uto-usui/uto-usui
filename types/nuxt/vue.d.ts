@@ -68,5 +68,11 @@ declare module 'vuex' {
 
     $gtag: Gtag
     $gtagClickEvent: GtagClickEvent
+
+    $exStore: Vuex.ExStore
+    $state: Vuex.ExStore['state']
+    $getters: Vuex.ExStore['getters']
+    $commit: Vuex.ExStore['commit']
+    $dispatch: Vuex.ExStore['dispatch']
   }
 }
