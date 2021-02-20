@@ -4,10 +4,8 @@
  */
 export const meta = {
   title: 'uto-usui.com',
-  description:
-    'web dev',
-  keywords:
-    '',
+  description: 'web dev',
+  keywords: '',
   ogImg: '',
   ogType: 'website',
   url: '',
