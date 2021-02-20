@@ -17961,16 +17961,16 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
-stylelint-config-good-scss@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-config-good-scss/-/stylelint-config-good-scss-3.0.1.tgz#053be9156ef5e38c0371cb86b226a71c88ee2541"
-  integrity sha512-cOM6+JPiIaQLHM15nIeC1gq94FwvJyVjWz6VQih5suLJ4FfSqNp24TZ7xxfeR5wiqekt+apIZOkVQuBMcK5/fA==
+stylelint-config-good-scss@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-good-scss/-/stylelint-config-good-scss-3.1.0.tgz#6c3204053a20969082269bad006bc08ad5f2cf47"
+  integrity sha512-1voAW6fAhp1sH/8xs3tx7UZONdPI9M9sl4coyBPqy9MJ93Fm5wttNtKLzD7Zexwb+YTarP/4vyVHa2YGFMr4YQ==
   dependencies:
-    stylelint-config-recess-order "^2.1.0"
+    stylelint-config-recess-order "^2.3.0"
     stylelint-config-standard "^20.0.0"
-    stylelint-scss "^3.18.0"
+    stylelint-scss "^3.19.0"
 
-stylelint-config-recess-order@^2.1.0:
+stylelint-config-recess-order@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/stylelint-config-recess-order/-/stylelint-config-recess-order-2.3.0.tgz#ee33adc4faf3a09ed8e3a53f682e1682e1884ff8"
   integrity sha512-z1d1m///to9ikecxP0uM2ljAmogHL1A+A4MUXtYrJvZRFPfPeODebimmJacx4cRL/oltEo3I6HqtreyRrn4lBg==
@@ -17998,7 +17998,7 @@ stylelint-order@4.1.x:
     postcss "^7.0.31"
     postcss-sorting "^5.0.1"
 
-stylelint-scss@^3.18.0:
+stylelint-scss@^3.19.0:
   version "3.19.0"
   resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.19.0.tgz#528006d5a4c5a0f1f4d709b02fd3f626ed66d742"
   integrity sha512-Ic5bsmpS4wVucOw44doC1Yi9f5qbeVL4wPFiEOaUElgsOuLEN6Ofn/krKI8BeNL2gAn53Zu+IcVV4E345r6rBw==
