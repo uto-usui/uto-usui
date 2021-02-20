@@ -98,12 +98,12 @@ export const locomotiveInit = ({ background }: LsType) => {
    * scroll function
    */
   const scrollHandler = ({
-                           direction,
-                           limit,
-                           scroll,
-                           speed,
-                           currentElements,
-                         }) => {
+    direction,
+    limit,
+    scroll,
+    speed,
+    currentElements,
+  }) => {
     scrollObj.direction = direction
     scrollObj.limit = limit.y
     scrollObj.scroll = {
