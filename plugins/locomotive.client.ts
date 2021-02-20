@@ -1,7 +1,11 @@
+import { Plugin } from '@nuxt/types'
+
 import locomotiveScroll from 'locomotive-scroll'
 import 'locomotive-scroll/dist/locomotive-scroll.min.css'
 
-export default (context, inject) => {
+const plugin: Plugin = (context, inject) => {
   context.$locomotiveScroll = locomotiveScroll
   inject('locomotiveScroll', locomotiveScroll)
 }
+
+export default plugin
