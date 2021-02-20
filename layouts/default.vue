@@ -16,7 +16,6 @@
       <nuxt />
     </main>
 
-    <LoadSvg />
     <Debug v-if="$config.nodeEnv === 'development'" />
   </div>
 </template>
@@ -29,12 +28,10 @@ import {
   onMounted,
 } from '@vue/composition-api'
 import Debug from '~/components/util/Debug.vue'
-import LoadSvg from '~/components/LoadSvg.vue'
 
 export default defineComponent({
   components: {
     Debug,
-    LoadSvg,
   },
   setup(_props, ctx) {
     let animationID = 0
