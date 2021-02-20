@@ -19,7 +19,7 @@ $base-line-height: 1.75 !default;
 // text color
 // ---------------------------------------------------------
 //
-$text-color: $color-white !default;
+$text-color: $color-black !default;
 $text-link-color: $color-green !default;
 //$text-primary-color: $black !default;
 //$text-secondary-color: #878788 !default;
@@ -34,7 +34,7 @@ $font-serif: 游明朝, yumincho, 'ヒラギノ明朝 ProN W3', 'Hiragino Mincho
 //
 $font-sans-serif-hiragino: 'Noto Sans JP', -apple-system, blinkmacsystemfont, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic ProN", myyugothicm, yugothic, メイリオ, meiryo, "Noto Sans Japanese", "Noto Sans CJK JP", sans-serif !default;
 //
-$font-sans-serif-yu: "Helvetica Neue", helvetica, arial, yugothic, "Yu Gothic", 游ゴシック体, 游ゴシック, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, meiryo, "MS ゴシック", "MS Gothic", sans-serif !default;
+$font-sans-serif-yu: 'Playfair Display', "Helvetica Neue", helvetica, arial, yugothic, "Yu Gothic", 游ゴシック体, 游ゴシック, "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", メイリオ, meiryo, "MS ゴシック", "MS Gothic", sans-serif !default;
 //
 $font-sans-serif: $font-sans-serif-yu;
 //
@@ -44,6 +44,4 @@ $font-tsukushi: 'Tsukushi A Round Gothic', '筑紫A丸ゴシック', "ヒラギ�
 //
 $font-ie: "Helvetica", meiryo, sans-serif !default;
 
-$font-roboto: roboto, sans-serif;
-$font-gibson: canada-type-gibson, sans-serif;
-$font-roboto-mono: roboto-mono, sans-serif;
+$font-Playfair: 'Playfair Display', serif;
