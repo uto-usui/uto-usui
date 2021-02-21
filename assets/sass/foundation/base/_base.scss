@@ -3,6 +3,10 @@ html {
   height: 100%;
   font-size: calc(100vw * 16 / 375);
 
+  @include tablet {
+    font-size: calc(100vw * 16 / 768);
+  }
+
   @include desktop {
     font-size: calc(100vw * 16 / 1200);
   }
