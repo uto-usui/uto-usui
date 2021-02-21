@@ -149,6 +149,14 @@ module.exports = {
     base: process.env.BASE_URL || '/',
   },
 
+  components: [
+    '~/components',
+    { path: '~/components/atoms/', prefix: 'atom' },
+    { path: '~/components/molecules/', prefix: 'molecule' },
+    { path: '~/components/organisms/', prefix: 'organism' },
+    { path: '~/components/util/', prefix: 'util' },
+  ],
+
   /*
    ** Build configuration
    */
