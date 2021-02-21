@@ -1,7 +1,7 @@
 <template>
   <p class="atom-paragraph">
     <UtilSplitting v-if="split" :text="text" />
-    <span v-else v-text="text"></span>
+    <span v-else v-html="text"></span>
   </p>
 </template>
 
