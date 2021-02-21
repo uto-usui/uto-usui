@@ -21,6 +21,7 @@
 
 .mn__list {
   display: flex;
+  justify-content: center;
 }
 
 .mn__item {
@@ -33,12 +34,17 @@
   align-items: center;
   justify-content: center;
   height: 9rem;
-  padding-right: 1.5rem;
-  padding-left: 1.5rem;
+  padding-right: 0.75rem;
+  padding-left: 0.75rem;
   color: $color-gray-level1;
   letter-spacing: 0.1em;
 
   @include sizes(-1);
+
+  @include desktop {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+  }
 
   &::after {
     position: absolute;
