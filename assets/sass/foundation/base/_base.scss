@@ -41,6 +41,19 @@ body {
 
 a {
   color: inherit;
+
+  &:not([class]) {
+    font-weight: 700;
+    color: $color-sky;
+    letter-spacing: 0.1em;
+
+    @include sizes(-2, 3);
+
+    &:hover {
+      color: $color-white;
+      background-color: $color-sky;
+    }
+  }
 }
 
 img,
