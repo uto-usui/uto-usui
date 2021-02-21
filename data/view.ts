@@ -21,5 +21,23 @@ export const viewData = {
       },
     ],
   },
+  works: [
+    {
+      name: 'run jyoshi',
+      text:
+        'Campaign site for Aiful run. To the Vivacious of the sports image and the cleanliness of the model, plus softness and humor by animation. I implemented asynchronous transition of the screen in order to make the content with many images look beautiful without stress.',
+      tag: 'HTML CSS JavaScript Intaraction Design',
+      link: '#',
+      images: ['01.jpg', '01.jpg', '01.jpg', '01.jpg'],
+    },
+    {
+      name: 'run jyoshi',
+      text:
+        'Campaign site for Aiful run. To the Vivacious of the sports image and the cleanliness of the model, plus softness and humor by animation. I implemented asynchronous transition of the screen in order to make the content with many images look beautiful without stress.',
+      tag: 'HTML CSS JavaScript Intaraction Design',
+      link: '#',
+      images: ['01.jpg', '01.jpg', '01.jpg', '01.jpg'],
+    },
+  ],
   nav: ['OVERVIEW', 'WORKS', 'ABOUT', 'OTHER'],
 } as const
