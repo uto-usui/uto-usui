@@ -1,8 +1,8 @@
 {
-  "name": "wired-v4",
-  "version": "4.0.0",
-  "description": "WIRED JAPAN v4",
-  "author": "CNJ",
+  "name": "uto-usui",
+  "version": "2.0.0",
+  "description": "yuto-usui portfolio",
+  "author": "uto-usui",
   "private": true,
   "scripts": {
     "dev:dev": "NODE_ENV=development PORT=8080 HOST=0.0.0.0 nuxt dev -o",
