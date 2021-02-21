@@ -5,7 +5,7 @@ import { computed, defineComponent, PropType, h } from '@vue/composition-api'
 export const ThePictureProps = {
   pictureSrc: {
     type: String,
-    default: require(`Images/placeholder.gif`),
+    default: '',
   },
 
   srcSetItems: {
