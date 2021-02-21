@@ -1,14 +1,14 @@
 <template>
-  <section class="molecules-overview">
+  <section class="organism-overview">
     <ClientOnly>
-      <div class="mo__lead">
+      <div class="oo__lead">
         <AtomLead split :text="data.title" />
       </div>
 
-      <div class="mo__paragraph">
+      <div class="oo__paragraph">
         <AtomParagraph split :text="data.text" />
       </div>
-      <div class="mo__paragraph">
+      <div class="oo__paragraph">
         <AtomParagraph
           v-for="(item, index) in links"
           :key="`mo_paragraph${index}`"
@@ -23,7 +23,7 @@
 <script lang="ts" src="./_Overview.ts"></script>
 
 <style lang="scss" scoped>
-.molecules-overview {
+.organism-overview {
   @include touch {
     padding-right: 2.5rem;
     padding-left: 2.5rem;
@@ -33,12 +33,12 @@
   margin: auto;
 }
 
-.mo__lead {
+.oo__lead {
   margin-bottom: get-line-height(-2, 3, 1);
 }
 
-.mo__paragraph {
-  + .mo__paragraph {
+.oo__paragraph {
+  + .oo__paragraph {
     margin-top: get-line-height(-2, 3, 1);
   }
 }
