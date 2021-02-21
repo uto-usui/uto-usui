@@ -20,7 +20,7 @@ export const ThePictureProps = {
 
   isWebP: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 
   isLazyScript: {
