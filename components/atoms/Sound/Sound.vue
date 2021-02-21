@@ -9,9 +9,6 @@
 
 <style lang="scss" scoped>
 .atom-sound {
-  position: fixed;
-  bottom: 1rem;
-  left: 1rem;
   font-style: italic;
   font-weight: 600;
 
