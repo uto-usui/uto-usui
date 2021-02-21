@@ -1,4 +1,4 @@
-<script lang="ts" src="./ThePicture.ts"></script>
+<script lang="ts" src="./_Picture.ts"></script>
 
 <style lang="scss" scoped>
 .the-picture {
@@ -28,5 +28,4 @@
   object-fit: cover;
   overflow: hidden;
 }
-
 </style>
