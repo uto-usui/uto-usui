@@ -3,7 +3,7 @@
   // color setting
   // - - - - - - - -
  */
-$color-primary: #4ecca3 !default;
+$color-primary: hsl(170, 69%, 65%) !default;
 $color-primary-light: lighten($color-primary, 12%) !default;
 
 $color-black: #1d2023 !default;
@@ -11,7 +11,7 @@ $color-white: #fff !default;
 
 $color-yellow: #FFF100 !default;
 $color-red: #990900 !default;
-$color-sky: #3DAEE4 !default;
+$color-sky: hsl(218, 69%, 65%) !default;
 $color-green: #2C3223 !default;
 $color-pink: #3DAEE4 !default;
 $color-purple: #0051A4 !default;
