@@ -61,12 +61,16 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .page-home {
-  width: 100%;
+  //
 }
 
 .ph__section {
-  //
+  padding-top: 8.5rem;
+
+  @include desktop {
+    padding-top: 17vw;
+  }
 }
 </style>
