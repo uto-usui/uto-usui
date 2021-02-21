@@ -83,4 +83,4 @@ $kv-pause-1: 2.25s;
 
 // transform
 $transition-a: opacity $easeFadeIn 0.5s, transform $easeFadeIn 1.5s;
-$matrix3d-a: matrix3d(0.799, -0.1, 0.00, 0, 0.10, 0.99, 0.00, 0, 0, 0, 1, 0, 20, 200, 0, 1);
+$matrix3d-a: matrix3d(0.799, -0.1, 0, 0, 0.1, 0.99, 0, 0, 0, 0, 1, 0, 20, 200, 0, 1);
