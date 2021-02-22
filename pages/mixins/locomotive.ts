@@ -65,7 +65,6 @@ export const locomotiveInit = ({ background }: LsType) => {
    * elements of bg interaction
    */
   const backgrounds = [] as { id: number; el: HTMLElement }[]
-  const rotates = [] as { id: number; el: HTMLElement; progress: number }[]
 
   const colorHue = 175
 
