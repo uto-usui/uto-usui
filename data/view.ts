@@ -26,7 +26,7 @@ export const viewData = {
       name: 'run jyoshi',
       text:
         'Campaign site for Aiful run. To the Vivacious of the sports image and the cleanliness of the model, plus softness and humor by animation. I implemented asynchronous transition of the screen in order to make the content with many images look beautiful without stress.',
-      tag: 'HTML CSS JavaScript Intaraction Design',
+      tag: 'HTML / CSS / JavaScript / Interaction Design',
       link: '#',
       images: ['01.jpg', '01.jpg', '01.jpg', '01.jpg'],
     },
@@ -34,10 +34,71 @@ export const viewData = {
       name: 'run jyoshi',
       text:
         'Campaign site for Aiful run. To the Vivacious of the sports image and the cleanliness of the model, plus softness and humor by animation. I implemented asynchronous transition of the screen in order to make the content with many images look beautiful without stress.',
-      tag: 'HTML CSS JavaScript Intaraction Design',
+      tag: 'HTML / CSS / JavaScript / Interaction Design',
       link: '#',
       images: ['01.jpg', '01.jpg', '01.jpg', '01.jpg'],
     },
   ],
+  about: {
+    skill: [
+      {
+        name: 'Design',
+        tags: 'Sketch / Photoshop / Illustrator / Animate',
+      },
+      {
+        name: 'HTML',
+        tags: 'EJS / Pug / SEO / structured markup / accessibility',
+      },
+      {
+        name: 'CSS',
+        tags: 'CSS3 / CSS4 / Sass / SCSS / Stylus / CSS Architecture',
+      },
+      {
+        name: 'JavaScript',
+        tags:
+          'ES6 / Babel / jQuery / Vue.js / TweenMax / CreateJS / processing.js / node.js / gulp.js / webpack / npm / bower / yarn',
+      },
+      {
+        name: 'PHP',
+        tags: 'Wordpress / SNS API',
+      },
+      {
+        name: 'Sound',
+        tags: 'Protools / Logic',
+      },
+      {
+        name: 'Other',
+        tags: 'MacOS / Git / Docker / Terminal / Slack / Backlog',
+      },
+    ],
+    social: [
+      {
+        link: 'https://www.instagram.com/uto_ao/',
+        name: 'instagram_',
+      },
+      {
+        link: 'https://jp.pinterest.com/okiniirinoao/',
+        name: 'pinterest_',
+      },
+      {
+        link: 'https://twitter.com/uto_ao',
+        name: 'twitter_',
+      },
+      {
+        link: 'https://github.com/uto-usui/uto-usui',
+        name: 'Github_',
+      },
+      {
+        link: 'https://qiita.com/uto-usui',
+        name: 'Qiita_',
+      },
+      {
+        link: 'https://zenn.dev/uto_ao',
+        name: 'Zenn_',
+      },
+    ],
+    fav:
+      'cats / J R R Tolkien / shuntaro tanikawa / shigesato itoi / manabu mizuno / hikaru ijyuin / americanfootball / hikaru utada / the band apeart / radio / bakery / coffee / bike / potato',
+  },
   nav: ['OVERVIEW', 'WORKS', 'ABOUT', 'OTHER'],
 } as const
