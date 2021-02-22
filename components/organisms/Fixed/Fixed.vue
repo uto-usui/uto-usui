@@ -41,6 +41,7 @@
   top: 0;
   right: 0;
   left: 0;
+  z-index: 9;
 
   @include desktop {
     top: 0;
