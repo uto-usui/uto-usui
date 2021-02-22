@@ -14,10 +14,6 @@ html {
   @include widescreen {
     font-size: calc(100vw * 16 / 1440);
   }
-
-  @include fullhd {
-    font-size: calc(100vw * 18 / 1920);
-  }
 }
 
 body {
