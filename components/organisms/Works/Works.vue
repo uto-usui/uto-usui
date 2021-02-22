@@ -71,6 +71,7 @@
 
   @include desktop {
     width: 62.5%;
+    padding-left: 2.5rem;
   }
 }
 
