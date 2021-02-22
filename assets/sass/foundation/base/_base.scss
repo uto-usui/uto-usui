@@ -29,8 +29,8 @@ body {
   word-wrap: break-word;
   overflow-wrap: break-word;
   background-color: $color-white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  //-webkit-font-smoothing: antialiased;
+  //-moz-osx-font-smoothing: grayscale;
   font-feature-settings: "palt";
   font-variant-ligatures: none;
 
