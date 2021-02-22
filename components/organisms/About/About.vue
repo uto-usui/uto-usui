@@ -89,7 +89,7 @@
   display: flex;
   justify-content: space-between;
 
-  @include sizes(-2);
+  @include sizes(-2, 3);
 }
 
 .aa__social-item {
