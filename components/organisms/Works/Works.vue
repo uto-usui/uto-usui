@@ -4,6 +4,8 @@
       <AtomTitle text="_Works" />
     </div>
 
+    <AtomSpace />
+
     <section
       v-for="(item, index) in list"
       :key="`ow__item${index}`"
@@ -59,7 +61,7 @@
 }
 
 .ow__item {
-  margin-top: 20rem;
+  // margin-top: 20rem;
 
   @include desktop {
     display: flex;

@@ -4,6 +4,8 @@
       <AtomTitle text="_About" />
     </div>
 
+    <AtomSpace small />
+
     <section class="oa__item">
       <div class="oa__name"><AtomHed :text="`skill set`" /></div>
 
@@ -47,7 +49,7 @@
 }
 
 .oa__title {
-  margin-bottom: get-line-height(-2, 3, 8);
+  //
 }
 
 .oa__item {
