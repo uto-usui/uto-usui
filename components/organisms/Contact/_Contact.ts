@@ -1,5 +1,4 @@
 import { defineComponent } from '@vue/composition-api'
-import { viewData } from '@/data/view'
 
 export default defineComponent({
   name: 'OrganismContact',
@@ -9,7 +8,7 @@ export default defineComponent({
 
   setup() {
     return {
-      data: viewData.contact,
+      //
     }
   },
 })

@@ -23,21 +23,32 @@
         <AtomSpace />
         <div class="oo__figures-inner">
           <div class="oo__figure oo__figure--left">
-            <AtomPicture
-              :picture-width="16"
-              :picture-height="9"
-              :picture-src="require(`Images/test/${item.image}`)"
-            />
+            <div
+              data-scroll
+              data-scroll-speed="-0.5"
+              data-scroll-direction="horizontal"
+            >
+              <AtomPicture
+                :picture-width="16"
+                :picture-height="9"
+                :picture-src="require(`Images/test/${item.image}`)"
+              />
+            </div>
           </div>
           <div class="oo__figure oo__figure--right">
-            <div class="oo__figure-inner">
-              <no-ssr>
-                <youtube ref="youtube" :video-id="item.youtube" />
-              </no-ssr>
+            <div
+              data-scroll
+              data-scroll-speed="0.5"
+              data-scroll-direction="horizontal"
+            >
+              <div class="oo__figure-inner">
+                <no-ssr>
+                  <youtube ref="youtube" :video-id="item.youtube" />
+                </no-ssr>
+              </div>
             </div>
           </div>
         </div>
-        <AtomSpace x-large />
       </div>
     </section>
   </section>
