@@ -168,7 +168,7 @@ export const locomotiveInit = ({ background }: LsType) => {
         getSpeed: true,
         getDirection: true,
       })
-      $dispatch('ls/setLs', (el) => ls.value.scrollTo(el))
+      $dispatch('ls/setLs', ls)
 
       if (background)
         ls.value.el.style.backgroundColor = `hsla(${colorHue}, 4%, 61%, 1)`
