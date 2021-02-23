@@ -11,7 +11,7 @@
       :key="`ow__item${index}`"
       class="ow__item"
     >
-      <div class="ow__texts">
+      <div class="ow__texts" data-scroll data-scroll-speed="-1">
         <div class="ow__name"><AtomHed :text="item.name" /></div>
 
         <div class="ow__paragraph"><AtomParagraph :text="item.text" /></div>
@@ -24,12 +24,15 @@
           />
         </div>
       </div>
-      <div class="ow__figures">
+      <div class="ow__figures" data-scroll data-scroll-speed="1">
         <div class="ow__figures-inner">
           <div
             v-for="(_item, _index) in item.images"
             :key="`aw__figure${_index}`"
             class="ow__figure"
+            data-scroll
+            :data-scroll-speed="1 * (_index % 2 ? -1 : 1)"
+            data-scroll-direction="horizontal"
           >
             <AtomPicture
               :picture-width="16"
