@@ -127,6 +127,7 @@ module.exports = {
    */
   styleResources: {
     scss: [
+      '~/assets/sass/foundation/function/_index.scss',
       '~/assets/sass/foundation/variable/_variable.scss',
       '~/assets/sass/foundation/mixin/_mixin.scss',
     ],
