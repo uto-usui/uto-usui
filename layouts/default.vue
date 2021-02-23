@@ -12,6 +12,8 @@
       `is-${$state.global.id}`,
     ]"
   >
+    <OrganismFixed />
+
     <main class="ld__main">
       <nuxt />
     </main>
@@ -27,31 +29,33 @@ import {
   onBeforeUnmount,
   onMounted,
 } from '@vue/composition-api'
+import { useContext } from '@/components/core/getCurrentInstance'
 import Debug from '~/components/util/Debug.vue'
 
 export default defineComponent({
   components: {
     Debug,
   },
-  setup(_props, ctx) {
+  setup(_props, _ctx) {
+    const { $dispatch, $getters } = useContext()
     let animationID = 0
 
     const handleResize = () => {
-      ctx.root.$store.dispatch('global/setWindow', {
+      $dispatch('global/setWindow', {
         w: window.innerWidth,
         h: window.innerHeight,
       })
     }
 
     const isOpen = computed(() => {
-      return ctx.root.$store.getters['global/getIsMenuOpen']
+      return $getters['global/getIsMenuOpen']
     })
 
     /**
      * scroll function -> requestAnimationFrame
      */
     const handleScroll = () => {
-      ctx.root.$store.dispatch('global/setScrollY', window.pageYOffset)
+      $dispatch('global/setScrollY', window.pageYOffset)
       animationID = requestAnimationFrame(handleScroll)
     }
 
@@ -76,8 +80,8 @@ export default defineComponent({
      * life cycle
      */
     onMounted(() => {
-      ctx.root.$store.dispatch('global/setScrollY', window.pageYOffset)
-      ctx.root.$store.dispatch('global/setWindow', {
+      $dispatch('global/setScrollY', window.pageYOffset)
+      $dispatch('global/setWindow', {
         w: window.innerWidth,
         h: window.innerHeight,
       })
@@ -105,7 +109,7 @@ export default defineComponent({
 @import '~Sass/foundation/_reset';
 @import '~Sass/foundation/base/_base';
 @import '~Sass/animation/_keyframes';
-@import '~Sass/object/utility/_utility';
+@import '~Sass/object/utility/';
 
 body {
   font-feature-settings: 'palt';
