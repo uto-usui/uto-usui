@@ -70,6 +70,7 @@ module.exports = {
     '~plugins/locomotive.client',
     '~plugins/splitting.client',
     '~plugins/gtag.client',
+    '~plugins/vue-youtube.client',
     '~plugins/composition-api',
     '~plugins/image-env',
     '~plugins/vuex-router-sync',
