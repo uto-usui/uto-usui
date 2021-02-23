@@ -1,10 +1,30 @@
 <template>
   <div data-scroll-container class="page-home">
-    <section class="ph__section" data-scroll-section>...</section>
+    <div class="ph__inner">
+      <section id="OVERVIEW" class="ph__section" data-scroll-section>
+        <OrganismOverview />
+      </section>
 
-    <section id="LETTER" class="ph__section" data-scroll-section>...</section>
+      <AtomSpace />
 
-    <section class="ph__section" data-scroll-section>...</section>
+      <section id="WORKS" class="ph__section" data-scroll-section>
+        <OrganismWorks />
+      </section>
+
+      <section id="ABOUT" class="ph__section" data-scroll-section>
+        <OrganismAbout />
+      </section>
+
+      <AtomSpace large />
+
+      <section id="OTHER" class="ph__section" data-scroll-section>
+        <OrganismOther />
+      </section>
+
+      <section id="FOOTER" class="ph__section" data-scroll-section>
+        <OrganismContact />
+      </section>
+    </div>
   </div>
 </template>
 
@@ -20,8 +40,6 @@ import { createMetaData, headObject } from '@/pages/mixins/head'
 import { useContext } from '@/components/core/getCurrentInstance'
 
 export default defineComponent({
-  components: {},
-
   setup(_props, _ctx) {
     /**
      * current component instance
@@ -66,7 +84,7 @@ export default defineComponent({
   //
 }
 
-.ph__section {
+.ph__inner {
   padding-top: 8.5rem;
 
   @include desktop {
