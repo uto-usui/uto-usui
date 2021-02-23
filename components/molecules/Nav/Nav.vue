@@ -6,7 +6,11 @@
         :key="`mn__item${index}}`"
         class="mn__item"
       >
-        <a class="mn__target" v-text="item" />
+        <a
+          class="mn__target"
+          @click.prevent="$getters['ls/getLs'].value.scrollTo(`#${item}`)"
+          v-text="item"
+        />
       </li>
     </ul>
   </nav>
