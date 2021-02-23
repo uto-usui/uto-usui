@@ -6,4 +6,15 @@ $desktop: 1200px !default;
 $widescreen: 1440px !default;
 $fullhd: 1920px !default;
 
-// 1280?
+$breakpoints: () !default;
+$breakpoints: map-deep-merge(
+  (
+    'mobile': 0,
+    'tablet': 768px,
+    'desktop': 1200px,
+    'widescreen': 1440px,
+    'fullhd': 1920px,
+  ),
+  $breakpoints
+);
+
