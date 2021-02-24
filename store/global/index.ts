@@ -20,12 +20,20 @@ export const state = (): S => ({
  * getters
  */
 export const getters: Getters<S, G> = {
+  getIsPageReady(state, _getters, _rootState, _rootgetters) {
+    return state.isPageReady
+  },
+
   getIsMenuOpen(state, _getters, _rootState, _rootgetters) {
     return state.isMenuOpen
   },
 
   getId(state, _getters, _rootState, _rootgetters) {
     return state.id
+  },
+
+  getWindow(state, _getters, _rootState, _rootgetters) {
+    return state.window
   },
 }
 
