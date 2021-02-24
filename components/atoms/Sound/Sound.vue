@@ -2,8 +2,8 @@
   <button
     id="js-sound"
     class="atom-sound"
-    :class="[{ 'is-play': play }]"
-    @click="play = !play"
+    :class="[{ 'is-play': isPlay }]"
+    @click="isPlay = !isPlay"
   >
     <span class="as__text">sound</span>
     <span class="as__border" />
