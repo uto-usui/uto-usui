@@ -4,7 +4,8 @@
     <div class="of__rect"><AtomRect /></div>
     <div class="of__sound"><AtomSound /></div>
     <div class="of__nav"><MoleculeNav /></div>
-    <div class="of__figures"></div>
+    <div class="of__shapes"><MoleculeShapes /></div>
+    <div class="of__loader"><AtomLoader /></div>
   </div>
 </template>
 
@@ -19,6 +20,7 @@
   position: fixed;
   top: 0;
   left: 0;
+  pointer-events: none;
 }
 
 .of__rect {
@@ -27,7 +29,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: -1;
+  z-index: -2;
+  pointer-events: none;
 }
 
 .of__sound {
@@ -48,5 +51,25 @@
     right: 6rem;
     left: auto;
   }
+}
+
+.of__shapes {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.of__loader {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 9;
+  pointer-events: none;
 }
 </style>
