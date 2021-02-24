@@ -1,4 +1,4 @@
-interface windowType {
+export interface viewPortSizeType {
   w: number
   h: number
 }
@@ -10,7 +10,7 @@ export interface S {
   isPageReady: boolean
   isMenuOpen: boolean
   pageName: string
-  window: windowType
+  window: viewPortSizeType
   scrollY: number
   id: string
 }
@@ -19,12 +19,16 @@ export interface S {
  * getters
  */
 export interface G {
+  getIsPageReady: boolean
   getIsMenuOpen: boolean
   getId: string
+  getWindow: viewPortSizeType
 }
 export interface RG {
+  'global/getIsPageReady': G['getIsPageReady']
   'global/getIsMenuOpen': G['getIsMenuOpen']
   'global/getId': G['getId']
+  'global/getWindow': G['getWindow']
 }
 
 /**
@@ -34,7 +38,7 @@ export interface M {
   isPageReady: boolean
   isMenuOpen: boolean
   pageName: string
-  window: windowType
+  window: viewPortSizeType
   scrollY: number
   id: string
 }
@@ -54,7 +58,7 @@ export interface A {
   setIsPageReady: boolean
   setIsMenuOpen: boolean
   setPageName: string
-  setWindow: windowType
+  setWindow: viewPortSizeType
   setScrollY: number
   setId: string
 }
