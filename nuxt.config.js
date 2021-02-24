@@ -42,7 +42,14 @@ module.exports = {
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: 'apple-touch-icon.png',
+      },
+    ],
     script: [
       {
         src:
@@ -217,6 +224,14 @@ module.exports = {
         test: /\.(glsl|vs|fs)$/,
         use: ['raw-loader', 'glslify-loader'],
         exclude: /(node_modules)/,
+      })
+
+      config.module.rules.push({
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]',
+        },
       })
 
       config.output.globalObject = 'this'
