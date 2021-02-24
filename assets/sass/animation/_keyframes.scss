@@ -11,3 +11,13 @@
     opacity: 1;
   }
 }
+
+@keyframes rotate {
+  0% {
+    transform: none;
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+}
