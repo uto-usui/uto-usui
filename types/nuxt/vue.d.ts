@@ -15,6 +15,8 @@ declare module '@nuxt/vue-app' {
     $gtag: Gtag
     $gtagClickEvent: GtagClickEvent
 
+    $splitting: any
+
     $exStore: Vuex.ExStore
     $state: Vuex.ExStore['state']
     $getters: Vuex.ExStore['getters']
@@ -32,6 +34,8 @@ declare module '@nuxt/types' {
 
     $gtag: Gtag
     $gtagClickEvent: GtagClickEvent
+
+    $splitting: any
 
     $exStore: Vuex.ExStore
     $state: Vuex.ExStore['state']
@@ -51,6 +55,8 @@ declare module 'vue/types/vue' {
     $gtag: Gtag
     $gtagClickEvent: GtagClickEvent
 
+    $splitting: any
+
     $exStore: Vuex.ExStore
     $state: Vuex.ExStore['state']
     $getters: Vuex.ExStore['getters']
@@ -68,6 +74,8 @@ declare module 'vuex' {
 
     $gtag: Gtag
     $gtagClickEvent: GtagClickEvent
+
+    $splitting: any
 
     $exStore: Vuex.ExStore
     $state: Vuex.ExStore['state']
