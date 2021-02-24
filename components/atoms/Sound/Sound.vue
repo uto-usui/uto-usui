@@ -1,5 +1,10 @@
 <template>
-  <button class="atom-sound">
+  <button
+    id="js-sound"
+    class="atom-sound"
+    :class="[{ 'is-play': play }]"
+    @click="play = !play"
+  >
     <span class="as__text">sound</span>
     <span class="as__border" />
   </button>
@@ -12,10 +17,13 @@
   display: block;
   font-style: italic;
   font-weight: 600;
+  opacity: 0.4;
 
   @include sizes(0);
-  // opacity: 0.4;
-  // border-bottom: 3px solid currentColor;
+
+  &.is-play {
+    opacity: 1;
+  }
 }
 
 .as__text {

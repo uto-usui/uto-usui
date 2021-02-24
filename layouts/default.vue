@@ -18,6 +18,10 @@
       <nuxt />
     </main>
 
+    <audio id="js-bgm" src="/music/bgm.mp3" style="display: none" muted>
+      <p>お使いのブラウザはaudio要素に対応していません。</p>
+    </audio>
+
     <Debug v-if="$config.nodeEnv === 'development'" />
   </div>
 </template>
