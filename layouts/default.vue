@@ -3,7 +3,7 @@
     class="layout-default"
     :class="[
       {
-        'is-ready': $state.global.isPageReady,
+        'is-ready': $getters['global/getIsPageReady'],
         'is-mobile': !$ua.isFromPc(),
       },
       `is-${$route.name}-page`,
@@ -14,7 +14,7 @@
   >
     <OrganismFixed />
 
-    <main class="ld__main">
+    <main id="main" class="ld__main">
       <nuxt />
     </main>
 
@@ -102,6 +102,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .ld__main {
   overflow: hidden;
+  opacity: 0;
 }
 </style>
 
