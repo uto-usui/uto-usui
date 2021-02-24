@@ -90,6 +90,9 @@
 }
 
 .ow__figure {
+  backface-visibility: hidden;
+  outline: 1px solid transparent;
+
   + .ow__figure {
     margin-top: 1rem;
   }
