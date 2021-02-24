@@ -127,6 +127,7 @@
   top: calc(50% - 3.75rem / 2);
   left: calc(50% - 3.75rem / 2);
   pointer-events: none;
+  opacity: 0;
 
   @include desktop {
     top: calc(50% - 6.25rem / 2);

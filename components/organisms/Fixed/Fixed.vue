@@ -37,6 +37,7 @@
   position: fixed;
   bottom: 1rem;
   left: 1rem;
+  z-index: 9;
 }
 
 .of__nav {

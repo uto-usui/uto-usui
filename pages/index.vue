@@ -38,6 +38,7 @@ import {
 import { locomotiveInit } from '@/pages/mixins/locomotive'
 import { createMetaData, headObject } from '@/pages/mixins/head'
 import { useContext } from '@/components/core/getCurrentInstance'
+import { animationStart } from '@/pages/mixins/animation'
 
 export default defineComponent({
   setup(_props, _ctx) {
@@ -50,6 +51,7 @@ export default defineComponent({
      * speed: {Number} wheel power
      */
     const { speed } = locomotiveInit({})
+    animationStart()
 
     /**
      * create page meta object
@@ -85,10 +87,6 @@ export default defineComponent({
 }
 
 .ph__inner {
-  padding-top: 8.5rem;
-
-  @include desktop {
-    padding-top: 17vw;
-  }
+  //
 }
 </style>
