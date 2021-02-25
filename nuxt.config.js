@@ -124,7 +124,7 @@ module.exports = {
   },
 
   'google-gtag': {
-    id: 'UA-xxxxxx',
+    id: 'G-EFFLZF7XMD',
     config: {
       send_page_view: false, // might be necessary to avoid duplicated page track on page reload
     },
