@@ -37,7 +37,7 @@
             <AtomPicture
               :picture-width="16"
               :picture-height="9"
-              :picture-src="require(`Images/test/${_item}`)"
+              :picture-src="require(`Images/${_item}`)"
             />
           </div>
         </div>
