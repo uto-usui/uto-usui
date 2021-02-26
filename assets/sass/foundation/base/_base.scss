@@ -86,8 +86,8 @@ select {
 }
 
 ::selection {
-  color: $color-black;
-  background: $color-gray-level4;
+  color: $text-color;
+  background: rgba($color-primary, 0.5);
 }
 
 [lazy='loading'] {
