@@ -7,11 +7,7 @@
         data-scroll-speed="1"
         data-scroll-direction="horizontal"
       >
-        <a
-          class="oc__target"
-          href="mailto:me@uto-usui.com me@uto-usui.com me@uto-usui.com"
-          target="_blank"
-        >
+        <a class="oc__target" href="mailto:me@uto-usui.com" target="_blank">
           me@uto-usui.com me@uto-usui.com me@uto-usui.com
         </a>
       </p>

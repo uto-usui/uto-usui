@@ -29,7 +29,11 @@
 }
 
 .mn__item {
-  //
+  width: 6.5rem;
+
+  &:nth-of-type(1) {
+    width: 8.18rem;
+  }
 }
 
 .mn__target {

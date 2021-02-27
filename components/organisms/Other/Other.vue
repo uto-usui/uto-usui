@@ -1,7 +1,7 @@
 <template>
   <section class="organism-other">
     <div class="oo__title">
-      <AtomTitle text="_Other" />
+      <AtomTitle text="_Other" data-scroll data-scroll-speed="-1.5" />
     </div>
 
     <AtomSpace />
