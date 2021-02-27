@@ -39,6 +39,7 @@ import { locomotiveInit } from '@/pages/mixins/locomotive'
 import { createMetaData, headObject } from '@/pages/mixins/head'
 import { useContext } from '@/components/core/getCurrentInstance'
 import { animationStart } from '@/pages/mixins/animation'
+import { linkColorToLine } from '@/pages/mixins/linkColor'
 
 export default defineComponent({
   setup(_props, _ctx) {
@@ -52,6 +53,7 @@ export default defineComponent({
      */
     const { speed } = locomotiveInit({})
     animationStart()
+    linkColorToLine()
 
     /**
      * create page meta object
