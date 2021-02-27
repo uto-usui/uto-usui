@@ -31,7 +31,7 @@
               <AtomPicture
                 :picture-width="16"
                 :picture-height="9"
-                :picture-src="require(`Images/test/${item.image}`)"
+                :picture-src="require(`Images/${item.image}`)"
               />
             </div>
           </div>
@@ -42,9 +42,9 @@
               data-scroll-direction="horizontal"
             >
               <div class="oo__figure-inner">
-                <no-ssr>
+                <client-only>
                   <youtube ref="youtube" :video-id="item.youtube" />
-                </no-ssr>
+                </client-only>
               </div>
             </div>
           </div>

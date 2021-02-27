@@ -1,6 +1,5 @@
-import { onBeforeUnmount, watch } from '@vue/composition-api'
+import { onBeforeUnmount, watchEffect } from '@vue/composition-api'
 import { pause } from '@/assets/js/animation'
-import { useContext } from '@/components/core/getCurrentInstance'
 
 import { gsap } from 'gsap'
 
@@ -59,20 +58,16 @@ export class LinkColorClass {
 export const linkColorToLine = () => {
   let linkColor = null as LinkColorClass | null
 
-  const { $getters } = useContext()
+  watchEffect(async () => {
+    if (!process.client) return
 
-  watch(
-    () => $getters['global/getIsPageReady'],
-    async (value) => {
-      if (!value) return
+    await pause(1)
 
-      await pause(1)
-      linkColor = new LinkColorClass()
-      linkColor.start()
+    linkColor = new LinkColorClass()
+    linkColor.start()
 
-      console.log('linkColor targets', linkColor)
-    },
-  )
+    console.log('linkColor targets', linkColor)
+  })
 
   onBeforeUnmount(() => {
     if (!linkColor) return
