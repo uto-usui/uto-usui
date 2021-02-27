@@ -7,7 +7,7 @@ export class ShuffleTextClass {
   private effects: ShuffleText[]
 
   constructor() {
-    this.targets = [...document.querySelectorAll<HTMLElement>('.js-shuffle')]
+    this.targets = [...document.querySelectorAll<HTMLElement>('a')]
     this.effects = []
 
     this.animation = this.animation.bind(this)
