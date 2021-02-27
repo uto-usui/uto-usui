@@ -1,5 +1,5 @@
 <template>
-  <h2 class="atom-hed" v-text="text" />
+  <h2 class="atom-hed" v-html="text" />
 </template>
 
 <script lang="ts" src="./_Hed.ts"></script>
@@ -8,6 +8,6 @@
 .atom-hed {
   font-weight: 700;
 
-  @include sizes(6);
+  @include sizes(6, 1);
 }
 </style>
