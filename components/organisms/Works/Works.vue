@@ -32,7 +32,7 @@
             class="ow__figure"
             data-scroll
             data-scroll-repeat
-            :data-scroll-speed="1 * (_index % 2 ? -1 : 1)"
+            :data-scroll-speed="_index % 2 ? -1 : 1"
             data-scroll-direction="horizontal"
           >
             <div class="ow__figure-inner">
@@ -93,7 +93,7 @@
 }
 
 .ow__figure {
-  //overflow: hidden;
+  overflow: hidden;
   backface-visibility: hidden;
   outline: 1px solid transparent;
 
@@ -103,12 +103,7 @@
 }
 
 .ow__figure-inner {
-  transition: transform 3s $easeFadeIn;
-  transform: perspective(125rem) scaleY(1) rotateX(0) translateY(5rem);
-
-  .ow__figure.is-inview & {
-    transform: none;
-  }
+  //
 }
 
 .ow__name {
