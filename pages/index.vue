@@ -40,6 +40,7 @@ import { createMetaData, headObject } from '@/pages/mixins/head'
 import { useContext } from '@/components/core/getCurrentInstance'
 import { animationStart } from '@/pages/mixins/animation'
 import { linkColorToLine } from '@/pages/mixins/linkColor'
+import { Shuffle } from '@/pages/mixins/shuffleText'
 
 export default defineComponent({
   setup(_props, _ctx) {
@@ -54,6 +55,7 @@ export default defineComponent({
     const { speed } = locomotiveInit({})
     animationStart()
     linkColorToLine()
+    Shuffle()
 
     /**
      * create page meta object

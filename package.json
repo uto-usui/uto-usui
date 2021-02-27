@@ -44,6 +44,7 @@
     "nuxt-user-agent": "^1.2.2",
     "nuxt-webfontloader": "^1.1.0",
     "responsive-loader": "^2.3.0",
+    "shuffle-text": "^0.3.2",
     "splitting": "^1.0.6",
     "sqip-loader": "^1.0.0",
     "swiper": "^6.4.15",

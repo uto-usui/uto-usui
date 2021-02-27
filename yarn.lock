@@ -17133,6 +17133,11 @@ shellwords@^0.1.1:
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
 
+shuffle-text@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/shuffle-text/-/shuffle-text-0.3.2.tgz#a5e21c8df092ff0e0cb1a6eabe2f404ad0b39f61"
+  integrity sha512-auXkQZb2nbgC1LBxv8Qo9yzxtHAQTHov4QnJWGF6spVYiiTQrEtNibb3iaXbFV9nhNBFOlBHUjMIf4RlWf3h6g==
+
 side-channel@^1.0.3, side-channel@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
