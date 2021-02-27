@@ -18,6 +18,7 @@ export const viewData = {
         title: 'clip blog_ ',
         name: 'webmanab-html',
         link: 'https://webmanab-html.com/',
+        color: '#393e46',
       },
       // { title: 'email_ ', name: 'me@uto-usui.com', link: ' me@uto-usui.com' },
       // {
@@ -35,6 +36,7 @@ export const viewData = {
       tag:
         'Nuxt / TypeScript / Test / Design System / Interaction Design / Creative Direction',
       link: 'https://wired.jp/',
+      color: '#8300d5',
       images: ['wired/1.jpg', 'wired/4.jpg', 'wired/2.jpg', 'wired/3.jpg'],
     },
     {
@@ -44,6 +46,7 @@ export const viewData = {
       tag:
         'Nuxt / TypeScript / WebGL / Interaction Design / Develop Management / Creative Direction',
       link: 'https://www.vogue.co.jp/anniversary/20th/',
+      color: '#fe0000',
       images: ['20th/2.jpg', '20th/3.jpg', '20th/1.jpg', '20th/4.jpg'],
     },
     {
@@ -51,6 +54,7 @@ export const viewData = {
       text: '',
       tag: 'Nuxt / TypeScript / Interaction Design / Creative Direction',
       link: 'https://wired.jp/vol39-the-world-in-2021/',
+      color: '#ff9f00',
       images: ['vol39/2.jpg', 'vol39/3.jpg', 'vol39/4.jpg', 'vol39/1.jpg'],
     },
     {
@@ -58,6 +62,7 @@ export const viewData = {
       text: '',
       tag: 'Nuxt / Interaction Design / Creative Direction',
       link: 'https://wired.jp/vol35-deep-tech-for-the-earth/',
+      color: '#e1e638',
       images: ['vol35/2.jpg', 'vol35/3.jpg', 'vol35/4.jpg', 'vol35/1.jpg'],
     },
     {
@@ -65,6 +70,7 @@ export const viewData = {
       text: '',
       tag: 'Nuxt / Interaction Design / Creative Direction',
       link: 'https://wired.jp/vol34-narrative-and-deployment/',
+      color: '#eeeeee',
       images: ['vol34/4.jpg', 'vol34/2.jpg', 'vol34/1.jpg', 'vol34/3.jpg'],
     },
     {
@@ -72,6 +78,7 @@ export const viewData = {
       text: '',
       tag: 'Nuxt / Interaction Design / Creative Direction',
       link: 'https://wired.jp/vol33-mirror-world/',
+      color: '#157bbf',
       images: ['vol33/2.jpg', 'vol33/4.jpg', 'vol33/3.jpg', 'vol33/1.jpg'],
     },
     {
@@ -79,6 +86,7 @@ export const viewData = {
       text: '',
       tag: 'Nuxt / Interaction Design / Creative Direction',
       link: 'https://wired.jp/vol32-digital-well-being/',
+      color: '#f27970',
       images: ['vol32/2.jpg', 'vol32/3.jpg', 'vol32/4.jpg', 'vol32/1.jpg'],
     },
     {
@@ -86,6 +94,7 @@ export const viewData = {
       text: '',
       tag: 'Vue / WebGL / Interaction Design / Creative Direction',
       link: 'https://www.gqjapan.jp/moty/2018/',
+      color: '#c9af5b',
       images: [
         'moty2018/1.jpg',
         'moty2018/2.jpg',
@@ -132,26 +141,32 @@ export const viewData = {
       {
         link: 'https://www.instagram.com/uto_ao/',
         name: 'instagram_',
+        color: '#171924',
       },
       {
         link: 'https://jp.pinterest.com/okiniirinoao/',
         name: 'pinterest_',
+        color: '#e60023',
       },
       {
         link: 'https://twitter.com/uto_ao',
         name: 'twitter_',
+        color: '#1DA1F2',
       },
       {
         link: 'https://github.com/uto-usui/uto-usui',
         name: 'Github_',
+        color: '#24292e',
       },
       {
         link: 'https://qiita.com/uto-usui',
         name: 'Qiita_',
+        color: '#55C500',
       },
       {
         link: 'https://zenn.dev/uto_ao',
         name: 'Zenn_',
+        color: '#3ea8ff',
       },
     ],
     fav:

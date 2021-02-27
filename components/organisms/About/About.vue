@@ -28,7 +28,12 @@
           :key="`oa__social${_index}`"
           class="aa__social-item"
         >
-          <a :href="_item.link" target="_blank" v-html="_item.name" />
+          <a
+            :href="_item.link"
+            :data-color="_item.color"
+            target="_blank"
+            v-html="_item.name"
+          />
         </li>
       </ul>
     </section>

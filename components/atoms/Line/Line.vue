@@ -1,6 +1,6 @@
 <template>
   <div class="atom-line">
-    <div class="ar__border"></div>
+    <div id="js-line" class="ar__border"></div>
   </div>
 </template>
 

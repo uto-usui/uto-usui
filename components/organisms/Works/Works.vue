@@ -20,7 +20,7 @@
 
         <div class="ow__paragraph">
           <AtomParagraph
-            :text="`<a href='${item.link}' target='_blank'>Visit To Website_</a>`"
+            :text="`<a href='${item.link}' data-color='${item.color}' target='_blank'>Visit To Website_</a>`"
           />
         </div>
       </div>

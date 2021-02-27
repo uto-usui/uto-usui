@@ -128,9 +128,12 @@ export const animationStart = () => {
   watch(
     () => $getters['global/getIsPageReady'],
     async (value) => {
+      if (!value) return
+
       await pause(1)
       loaderHide($getters['global/getWindow'])
       shapeAnimation($getters['global/getWindow'])
+
       console.log('🔥 animationStart', value)
     },
   )
