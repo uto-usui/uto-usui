@@ -19,7 +19,7 @@
             <AtomPicture
               :picture-width="16"
               :picture-height="9"
-              :picture-src="require(`Images/test/${figure}`)"
+              :picture-src="require(`Images/${figure}`)"
             />
           </div>
         </div>
