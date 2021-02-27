@@ -31,14 +31,17 @@
             :key="`aw__figure${_index}`"
             class="ow__figure"
             data-scroll
+            data-scroll-repeat
             :data-scroll-speed="1 * (_index % 2 ? -1 : 1)"
             data-scroll-direction="horizontal"
           >
-            <AtomPicture
-              :picture-width="16"
-              :picture-height="9"
-              :picture-src="require(`Images/${_item}`)"
-            />
+            <div class="ow__figure-inner">
+              <AtomPicture
+                :picture-width="16"
+                :picture-height="9"
+                :picture-src="require(`Images/${_item}`)"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -90,11 +93,21 @@
 }
 
 .ow__figure {
+  //overflow: hidden;
   backface-visibility: hidden;
   outline: 1px solid transparent;
 
   + .ow__figure {
     margin-top: 1rem;
+  }
+}
+
+.ow__figure-inner {
+  transition: transform 3s $easeFadeIn;
+  transform: perspective(125rem) scaleY(1) rotateX(0) translateY(5rem);
+
+  .ow__figure.is-inview & {
+    transform: none;
   }
 }
 
