@@ -1,13 +1,15 @@
 <template>
   <section class="organism-about">
-    <div class="oa__title">
+    <div class="oa__title" data-scroll data-scroll-speed="-1.5">
       <AtomTitle text="_About" />
     </div>
 
     <AtomSpace small />
 
     <section class="oa__item">
-      <div class="oa__name"><AtomHed :text="`skill set`" /></div>
+      <div class="oa__name">
+        <AtomHed :text="`skill set`" />
+      </div>
 
       <dl
         v-for="(item, index) in data.skill"

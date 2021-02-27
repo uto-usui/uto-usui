@@ -1,6 +1,6 @@
 <template>
   <section class="organism-works">
-    <div class="ow__title">
+    <div class="ow__title" data-scroll data-scroll-speed="-1.5">
       <AtomTitle text="_Works" />
     </div>
 
@@ -12,7 +12,9 @@
       class="ow__item"
     >
       <div class="ow__texts" data-scroll data-scroll-speed="-1">
-        <div class="ow__name"><AtomHed :text="item.name" /></div>
+        <div class="ow__name">
+          <AtomHed :text="item.name" />
+        </div>
 
         <div class="ow__paragraph"><AtomParagraph :text="item.text" /></div>
 
