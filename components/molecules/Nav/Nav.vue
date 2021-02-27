@@ -7,7 +7,7 @@
         class="mn__item"
       >
         <a
-          class="mn__target"
+          class="mn__target js-shuffle"
           @click.prevent="$getters['ls/getLs'].value.scrollTo(`#${item}`)"
           v-text="item"
         />
