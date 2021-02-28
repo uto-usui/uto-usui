@@ -6,7 +6,7 @@ export const viewData = {
   overview: {
     title: 'Hello, I am branding engineer :)',
     text: [
-      'I am 31 years old and a web developer from Nara. After a music university, I changed my career from a musician / sound engineer to a web developer when I was 25 years old.',
+      'I am 31 years old and a web developer from Nara/Japan. After a music university, I changed my career from a musician / sound engineer to a web developer when I was 25 years old.',
       "I'm good at building high-performance SPA / SSG sites in Nuxt / Next x TypeScript, developed components that reflect design systems, luxury visuals in WebGL, and UI / UX considerations for interpreting business and brand stories.",
       'Winner: FWA FOTD / ACC TOKYO CREATIVITY AWARDS Branded category Finalist',
       'I love cat and engineering and music.',
