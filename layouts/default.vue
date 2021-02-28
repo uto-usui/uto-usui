@@ -106,7 +106,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .ld__main {
   overflow: hidden;
-  opacity: 0;
 }
 </style>
 

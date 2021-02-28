@@ -1,6 +1,6 @@
 <template>
   <section class="organism-overview">
-    <div class="oo__inner">
+    <div id="js-main" class="oo__inner">
       <div class="oo__main">
         <ClientOnly>
           <div class="oo__lead">
@@ -70,6 +70,16 @@
 
 .oo__inner {
   position: relative;
+  opacity: 0;
+  will-change: transform, opacity;
+
+  @include touch {
+    padding-bottom: 10rem;
+  }
+
+  @include desktop {
+    min-height: 100vh;
+  }
 }
 
 .oo__ghost {
