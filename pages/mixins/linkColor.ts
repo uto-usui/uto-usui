@@ -40,8 +40,6 @@ export class LinkColorClass {
       borderColor: color,
       ease: 'power2.out',
     })
-
-    console.log('🖱 mouseenter', color, this.line)
   }
 
   outHandle(_e) {
@@ -65,8 +63,6 @@ export const linkColorToLine = () => {
 
     linkColor = new LinkColorClass()
     linkColor.start()
-
-    console.log('linkColor targets', linkColor)
   })
 
   onBeforeUnmount(() => {
