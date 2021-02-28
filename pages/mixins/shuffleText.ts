@@ -39,7 +39,6 @@ export class ShuffleTextClass {
     if (!(target instanceof HTMLElement) || !target.dataset.index) return
 
     this.effects[target.dataset.index].start()
-    console.log(target.dataset.index)
   }
 }
 
@@ -56,8 +55,6 @@ export const Shuffle = () => {
 
     shuffleText = new ShuffleTextClass()
     shuffleText.start()
-
-    // console.log('linkColor targets', linkColor)
   })
 
   onBeforeUnmount(() => {
