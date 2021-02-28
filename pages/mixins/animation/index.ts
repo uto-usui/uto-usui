@@ -1,4 +1,4 @@
-import { watch } from '@vue/composition-api'
+import { watchEffect } from '@vue/composition-api'
 import { useContext } from '@/components/core/getCurrentInstance'
 import { gsap } from 'gsap'
 import { pause } from '@/assets/js/animation'
@@ -10,7 +10,29 @@ export const tempo = (60 / 106) * 4
 
 gsap.defaults({ overwrite: 'auto' })
 
-const textAnime = ({ w, h }: viewPortSizeType) => {
+const nameIn = () => {
+  const items = document.querySelectorAll('#atom-name .js-name')
+  console.log(items)
+
+  return new Promise<void>((resolve) => {
+    gsap.to(items, 1, {
+      x: 0,
+      stagger: 0.2,
+      ease: 'power3.inOut',
+      onComplete: () => {
+        resolve()
+      },
+    })
+  })
+}
+
+/**
+ * initialize text animation
+ *
+ * @param h
+ * @param w
+ */
+const textAnimInit = ({ h, w }: viewPortSizeType) => {
   const items = document.querySelectorAll('#OVERVIEW .char')
 
   const moveY = h / 2
@@ -29,6 +51,13 @@ const textAnime = ({ w, h }: viewPortSizeType) => {
       z: random(-400, -200),
     })
   })
+}
+
+/**
+ * play text animation
+ */
+const textAnime = () => {
+  const items = document.querySelectorAll('#OVERVIEW .char')
 
   gsap.to(items, 1, {
     rotationX: 0,
@@ -36,43 +65,36 @@ const textAnime = ({ w, h }: viewPortSizeType) => {
     x: 0,
     z: 0,
     autoAlpha: 1,
-    ease: 'Power3.out',
+    ease: 'power3.out',
     delay: 1,
     stagger: tempo / 64,
   })
 }
 
-const showMain = (viewPortSize: viewPortSizeType) => {
+/**
+ * show main wrapper
+ */
+const showMain = () => {
   gsap.fromTo(
-    '#main',
+    '#js-main',
     {
       y: 300,
     },
     {
       autoAlpha: 1,
       y: 0,
-      ease: 'Power2.out',
-      duration: 2.5,
-      onStart() {
-        textAnime(viewPortSize)
-      },
+      ease: 'power2.inOut',
+      duration: 2.25,
     },
   )
 }
 
 const shapeAnimation = ({ w, h }: viewPortSizeType) => {
-  /**
-   * path color infinite
-   */
-  gsap.to('.js-svg', 1.8, {
-    stroke: `hsl(random(170, 220)%, 69%, 65%)`,
-    ease: 'none',
-    repeat: -1,
-    yoyo: true,
-  })
-
   const items = document.querySelectorAll('.js-svg-wrap')
 
+  /**
+   * move shapes on window
+   */
   const move = () => {
     const moveY = h / 2
     const moveX = w / 2
@@ -91,50 +113,97 @@ const shapeAnimation = ({ w, h }: viewPortSizeType) => {
     })
   }
 
-  const init = () => {
+  const start = () => {
     bgmPlay()
     move()
     setInterval(move, tempo * 4 * 1000)
   }
 
+  /**
+   * path color infinite
+   */
+  gsap.to('.js-svg', 1.8, {
+    stroke: `hsl(random(170, 220)%, 69%, 65%)`,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+  })
+
   gsap.set(items, {
     transformPerspective: 500,
   })
 
+  /**
+   * shape in
+   */
   gsap.to(items, 0.5, {
     autoAlpha: 1,
     z: -200,
-    ease: 'Power2.out',
-    onComplete: init,
+    ease: 'power2.out',
+    delay: 0.6,
+    onComplete: start,
   })
 }
 
-const loaderHide = (viewPortSize) => {
-  gsap.to('#js-loader', 0.8, {
-    y: -100,
-    autoAlpha: 0,
-    scale: 0.7,
-    ease: 'Power3.In',
-    onComplete: async () => {
-      await pause(2.5)
-      showMain(viewPortSize)
-    },
+/**
+ * hide loader
+ */
+const loaderHide = () => {
+  return new Promise<void>((resolve) => {
+    gsap.to('#js-loader', 0.8, {
+      y: -100,
+      autoAlpha: 0,
+      scale: 0.7,
+      ease: 'power3.in',
+      onComplete: () => {
+        resolve()
+      },
+    })
+  })
+}
+
+/**
+ * font load checker
+ * @param name {string}
+ */
+const checkLoadFont = (name: string) => {
+  const html = document.getElementsByTagName('html')
+  const _html = html.item(0)
+
+  return new Promise<void>((resolve) => {
+    const timer = setInterval(() => {
+      if (_html && _html.classList.contains(name)) {
+        console.log('𝓣 loaded :)')
+
+        clearInterval(timer)
+        resolve()
+      }
+    }, 60)
+
+    console.log(timer)
   })
 }
 
 export const animationStart = () => {
   const { $getters } = useContext()
 
-  watch(
-    () => $getters['global/getIsPageReady'],
-    async (value) => {
-      if (!value) return
+  watchEffect(async () => {
+    if (!process.client) return
 
-      await pause(1)
-      loaderHide($getters['global/getWindow'])
-      shapeAnimation($getters['global/getWindow'])
+    await checkLoadFont('wf-playfairdisplay-n4-inactive')
+    await nameIn()
 
-      console.log('🔥 animationStart', value)
-    },
-  )
+    await pause(0.1)
+
+    shapeAnimation($getters['global/getWindow'])
+    await loaderHide()
+    textAnimInit($getters['global/getWindow'])
+
+    await pause(2.5)
+
+    showMain()
+    textAnime()
+
+    console.log('🔥 animationStart')
+  })
 }
