@@ -12,7 +12,6 @@ gsap.defaults({ overwrite: 'auto' })
 
 const nameIn = () => {
   const items = document.querySelectorAll('#atom-name .js-name')
-  console.log(items)
 
   return new Promise<void>((resolve) => {
     gsap.to(items, 1, {

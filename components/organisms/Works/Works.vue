@@ -8,6 +8,7 @@
 
     <section
       v-for="(item, index) in list"
+      :id="`ow_figures${index}`"
       :key="`ow__item${index}`"
       class="ow__item"
     >
@@ -33,7 +34,7 @@
             :key="`aw__figure${_index}`"
             class="ow__figure"
             data-scroll
-            data-scroll-repeat
+            :data-scrol-target="`#ow_figures${index}`"
             :data-scroll-speed="_index % 2 ? -1 : 1"
             data-scroll-direction="horizontal"
           >
