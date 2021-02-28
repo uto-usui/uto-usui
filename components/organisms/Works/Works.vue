@@ -69,10 +69,14 @@
 }
 
 .ow__item {
-  // margin-top: 20rem;
-
   @include desktop {
     display: flex;
+  }
+
+  + .ow__item {
+    @include touch {
+      margin-top: get-line-height(-2, 3, 2);
+    }
   }
 }
 
@@ -86,12 +90,22 @@
 }
 
 .ow__figures {
-  width: 37.5%;
+  @include touch {
+    margin-top: get-line-height(-2, 3, 1);
+    margin-right: -2.5rem;
+    margin-left: -2.5rem;
+  }
+
+  @include desktop {
+    width: 37.5%;
+  }
 }
 
 .ow__figures-inner {
-  transform: perspective(600px) translateY(-40%) rotateX(45deg) rotateZ(35deg)
-    translate3d(-2rem, 0, -18rem);
+  @include desktop {
+    transform: perspective(600px) translateY(-40%) rotateX(45deg) rotateZ(40deg)
+      translate3d(-2rem, 0, -18rem);
+  }
 }
 
 .ow__figure {
@@ -109,7 +123,11 @@
 }
 
 .ow__name {
-  margin-bottom: get-line-height(-2, 3, 2);
+  margin-bottom: get-line-height(-2, 3, 1);
+
+  @include desktop {
+    margin-bottom: get-line-height(-2, 3, 2);
+  }
 }
 
 .ow__paragraph {
@@ -118,6 +136,10 @@
 
 .ow__tags {
   margin-top: get-line-height(-2, 3, 1);
-  margin-bottom: get-line-height(-2, 3, 3);
+  margin-bottom: get-line-height(-2, 3, 1);
+
+  @include desktop {
+    margin-bottom: get-line-height(-2, 3, 3);
+  }
 }
 </style>

@@ -12,6 +12,10 @@
   text-shadow: 0.5em 0.25em 0 $color-yellow;
   backface-visibility: hidden;
 
-  @include sizes(7);
+  @include sizes(6);
+
+  @include desktop {
+    @include sizes(7);
+  }
 }
 </style>
