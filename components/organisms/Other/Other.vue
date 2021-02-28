@@ -57,7 +57,7 @@
 <script lang="ts" src="./_Other.ts"></script>
 
 <style lang="scss" scoped>
-.organism-works {
+.organism-other {
   //
 }
 

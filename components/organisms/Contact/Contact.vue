@@ -51,7 +51,11 @@
   font-style: italic;
   opacity: 0.7;
 
-  @include sizes(7);
+  @include sizes(5);
+
+  @include desktop {
+    @include sizes(7);
+  }
 }
 
 .oc__target {
@@ -62,7 +66,11 @@
   font-style: italic;
   opacity: 0.7;
 
-  @include sizes(1);
+  @include sizes(-1);
+
+  @include desktop {
+    @include sizes(1);
+  }
 }
 
 .oo__title {

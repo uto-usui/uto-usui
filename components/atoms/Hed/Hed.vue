@@ -8,6 +8,10 @@
 .atom-hed {
   font-weight: 700;
 
-  @include sizes(6, 1);
+  @include sizes(5, 1);
+
+  @include desktop {
+    @include sizes(6, 1);
+  }
 }
 </style>

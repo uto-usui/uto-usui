@@ -5,8 +5,6 @@
         <OrganismOverview />
       </section>
 
-      <AtomSpace />
-
       <section id="WORKS" class="ph__section" data-scroll-section>
         <OrganismWorks />
       </section>
@@ -53,8 +51,20 @@ export default defineComponent({
      * speed: {Number} wheel power
      */
     const { speed } = locomotiveInit({})
+
+    /**
+     * fadein animation
+     */
     animationStart()
+
+    /**
+     * link data-color to line
+     */
     linkColorToLine()
+
+    /**
+     * shuffle text link
+     */
     Shuffle()
 
     /**

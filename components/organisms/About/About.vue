@@ -52,7 +52,7 @@
 
 <style lang="scss" scoped>
 .organism-about {
-  //
+  margin-top: get-line-height(-2, 3, 4);
 }
 
 .oa__title {
@@ -99,9 +99,17 @@
   justify-content: space-between;
 
   @include sizes(-2, 3);
+
+  @include touch {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
 
 .aa__social-item {
-  //
+  @include touch {
+    padding-right: 1em;
+    padding-left: 1em;
+  }
 }
 </style>

@@ -32,7 +32,7 @@
 
 <style lang="scss" scoped>
 .molecule-figures {
-  --figures-height: 33rem;
+  --figures-height: 20rem;
   --figure-margin: 0.5rem;
   --figures-inner-width: 200vw;
   --figures-inner-height: var(--figures-height);
@@ -40,6 +40,10 @@
   position: relative;
   height: var(--figures-height);
   perspective: 62rem;
+
+  @include desktop {
+    --figures-height: 33rem;
+  }
 }
 
 .mf__inner {
@@ -51,11 +55,21 @@
   transform: translate(-50%, -50%);
 
   .molecule-figures.molecule-figures--woodwork & {
+    @include touch {
+      transform: translate3d(-50%, -50%, 0) translateX(-15%) translateY(5%)
+        translateZ(-200px) rotateX(0) rotateZ(25deg);
+    }
+
     transform: translate3d(-50%, -50%, 0) translateX(-15%) translateY(-25%)
       translateZ(-200px) rotateX(65.5deg) rotateZ(22deg);
   }
 
   .molecule-figures.molecule-figures--photograph & {
+    @include touch {
+      transform: translate3d(-50%, -50%, 0) translateX(15%) translateY(5%)
+        translateZ(-200px) rotateX(0) rotateZ(-25deg);
+    }
+
     transform: translate3d(-50%, -50%, 0) translateX(15%) translateY(-25%)
       translateZ(-200px) rotateX(65.5deg) rotateZ(-22deg);
   }
