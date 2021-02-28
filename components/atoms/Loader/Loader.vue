@@ -20,6 +20,11 @@
     --loader-gap: 0.5rem;
   }
 
+  @include fullhd {
+    --loader-size: 4.5rem;
+    --loader-gap: 0.5rem;
+  }
+
   position: absolute;
   width: var(--loader-size);
   height: var(--loader-size);

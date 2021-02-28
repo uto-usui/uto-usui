@@ -119,20 +119,23 @@
 
 <style lang="scss" scoped>
 .molecules-shapes {
-  //
+  --shape-size: 3.75rem;
+
+  @include desktop {
+    --shape-size: 6.25rem;
+  }
+
+  @include fullhd {
+    --shape-size: 5rem;
+  }
 }
 
 .ms__item {
   position: absolute;
-  top: calc(50% - 3.75rem / 2);
-  left: calc(50% - 3.75rem / 2);
+  top: calc(50% - var(--shape-size) / 2);
+  left: calc(50% - var(--shape-size) / 2);
   pointer-events: none;
   opacity: 0;
-
-  @include desktop {
-    top: calc(50% - 6.25rem / 2);
-    left: calc(50% - 6.25rem / 2);
-  }
 }
 
 .ms__inner {
@@ -140,11 +143,7 @@
 }
 
 .ms__svg {
-  width: 3.75rem;
+  width: var(--shape-size);
   stroke: $color-primary;
-
-  @include desktop {
-    width: 6.25rem;
-  }
 }
 </style>
