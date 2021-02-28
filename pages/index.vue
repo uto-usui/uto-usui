@@ -45,7 +45,7 @@ export default defineComponent({
     /**
      * current component instance
      */
-    const { $dispatch } = useContext()
+    const { $dispatch, $getters } = useContext()
     /**
      * init locomotive
      * speed: {Number} wheel power
@@ -76,6 +76,10 @@ export default defineComponent({
       nextTick(() => {
         // await ImageSingleLoad(require('Images/test/01.jpg'))
         $dispatch('global/setIsPageReady', true)
+
+        setTimeout(() => {
+          $getters['ls/getLs'].value.update()
+        }, 3000)
       })
     })
 
