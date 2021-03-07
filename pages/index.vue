@@ -50,7 +50,7 @@ export default defineComponent({
      * init locomotive
      * speed: {Number} wheel power
      */
-    const { speed } = locomotiveInit({})
+    const { speed, resizeHandler } = locomotiveInit({})
 
     /**
      * fadein animation
@@ -78,7 +78,12 @@ export default defineComponent({
         $dispatch('global/setIsPageReady', true)
 
         setTimeout(() => {
+          console.log(
+            "$getters['ls/getLs'].value.update()",
+            $getters['ls/getLs'].value.update,
+          )
           $getters['ls/getLs'].value.update()
+          resizeHandler()
         }, 3000)
       })
     })
