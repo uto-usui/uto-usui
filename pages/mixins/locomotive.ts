@@ -58,7 +58,7 @@ export const locomotiveInit = ({ background }: LsType) => {
    */
   const resizeHandler = () => {
     ls.value.update()
-    // console.log('resize')
+    console.log('🐈 resize')
   }
 
   /**
@@ -206,5 +206,5 @@ export const locomotiveInit = ({ background }: LsType) => {
     })
   })
 
-  return { ls, ...toRefs(progress), ...toRefs(scrollObj) }
+  return { resizeHandler, ls, ...toRefs(progress), ...toRefs(scrollObj) }
 }
