@@ -13,7 +13,6 @@ class ExStore {
   }
 
   state() {
-    // @ts-ignore
     return this.store.state
   }
 
