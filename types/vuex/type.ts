@@ -30,6 +30,7 @@ declare module 'vuex' {
   // ______________________________________________________
   //
   interface ExStore extends Store<RootState> {
+    state: RootState
     getters: RootGetters
     commit: ExCommit<RootMutations>
     dispatch: ExDispatch<RootActions>
