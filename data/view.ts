@@ -51,7 +51,8 @@ export const viewData = {
     },
     {
       name: 'WIRED vol.39 <br> The World in 2021',
-      text: '',
+      text:
+        'Since this page contains many articles, we implemented a fluid interaction as if a large amount of information were flowing into the magazine. We also used a simple but directional parallax expression to express the feeling of the magazine shaking.',
       tag: 'Nuxt / TypeScript / Interaction Design / Creative Direction',
       link: 'https://wired.jp/vol39-the-world-in-2021/',
       color: '#ff9f00',
