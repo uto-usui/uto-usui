@@ -192,7 +192,7 @@ module.exports = {
     terser: {
       terserOptions: {
         // disable console on prod
-        compress: { drop_console: true },
+        compress: { drop_console: false },
       },
     },
 
