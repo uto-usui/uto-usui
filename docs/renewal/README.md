@@ -164,7 +164,7 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 | 分類 | やること |
 | --- | --- |
 | 安全 | polyfill.io の読み込みを消します。`.htaccess` で応答ヘッダー（`X-Content-Type-Options`、`Referrer-Policy`、`Permissions-Policy`、HSTS）を足します。CSP は Astro の `security.csp` で `<meta>` に出します。script と `<style>` はハッシュで許し、外は GA4 と YouTube（押されたあとの iframe）だけを許します。splitting が要素の `style` 属性を使うので、`style-src-attr` だけ `unsafe-inline` にしました |
-| 計測 | GA4（`G-EFFLZF7XMD`）は続けます。ID は環境変数で渡し、本番のビルドでだけ読みます。Google Search Console に `uto-usui.com` をドメインプロパティで登録し（確認用の TXT レコードは API で足せます）、sitemap を送ります。2026-10-25 の時点では未登録です。登録は webmanab.com と同じ個人の Google アカウントで行います |
+| 計測 | GA4（`G-EFFLZF7XMD`）は続けます。ID は環境変数で渡し、本番のビルドでだけ読みます。Google Search Console に `uto-usui.com` をドメインプロパティで登録し（確認用の TXT レコードは API で足しました）、sitemap を送りました（2026-10-25）。登録は webmanab.com と同じ個人の Google アカウントで行います |
 | 検索・共有 | `@astrojs/sitemap` で `sitemap.xml` を作り、`robots.txt` から指します。OGP と Twitter Card は今の内容のまま、`og:image` の絶対 URL と `canonical` を正しく出します。人物の構造化データ（JSON-LD の `Person`）を足します。404 ページを作ります |
 | 速さ | ハッシュ付きの `/_astro/*` は 1 年キャッシュ、HTML は毎回確かめる、という設定を `.htaccess` に書きます（今は `max-age=1`）。BGM は押されてから読み込みます。Core Web Vitals を Lighthouse で旧サイトと比べ、悪くならないことを確かめます |
 | a11y | 「今より悪くしない」を守ります。OS で「視差効果を減らす」を選んでいる人には、慣性スクロールと大きな動きを止めます（`prefers-reduced-motion`）。動きを減らしていない人の見た目は変わりません。直す順番は axe の結果を一覧にしてから決めます |
@@ -185,7 +185,7 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 | 6 | head、SEO、計測、`.htaccess`（4 章） | **済み**。`test/dist/` で確かめる |
 | 7 | エックスサーバーとの同期（7 章） | **済み**。dry-run で、旧サイトの `_nuxt/` などの削除と `.htaccess` の変更が「確認が要る」と判定された |
 | 8 | 比べて仕上げる | **済み**（3.3） |
-| 9 | 公開する | **済み**（2026-10-25、PR #1）。`xserver:deploy` で入れ替えた（控えは `~/backup/uto-usui.com/20261025-113529/`）。公開後の確認は、`robots.txt` が X アクセラレータのキャッシュで古いまま返ったほかは通った。Search Console の登録は、ユーザーの判断で今回は見送った |
+| 9 | 公開する | **済み**（2026-10-25、PR #1）。`xserver:deploy` で入れ替えた（控えは `~/backup/uto-usui.com/20261025-113529/`）。公開後の確認は、`robots.txt` が X アクセラレータのキャッシュで古いまま返ったほかは通った。同じ日に Search Console にドメインプロパティで登録し（確認用の TXT は API で追加）、sitemap を送った |
 
 ## 6. やらないこと
 
