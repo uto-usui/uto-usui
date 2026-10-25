@@ -17,7 +17,7 @@ export const viewData = {
       {
         title: 'clip blog_ ',
         name: 'webmanab-html',
-        link: 'https://webmanab-html.com/',
+        link: 'https://webmanab.com/',
         color: '#393e46',
       },
       // { title: 'email_ ', name: 'me@uto-usui.com', link: ' me@uto-usui.com' },
