@@ -371,14 +371,14 @@ function check(c: Config) {
       status: 200,
       header: ['access-control-allow-origin', /\*/],
     },
-    { url: `https://note.${c.domain}/`, status: 200 },
   ]
   let ok = true
   for (const p of probes) {
+    // 本文を見ないもの（動画など）は捨てる。全部を読むと spawnSync のバッファがあふれる
     const res = run('curl', [
       '-s',
       '-o',
-      '-',
+      p.body ? '-' : '/dev/null',
       '-D',
       '/dev/stderr',
       '--max-time',

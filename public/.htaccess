@@ -43,6 +43,9 @@ Header set Access-Control-Allow-Origin "*"
 ExpiresActive On
 ExpiresDefault "access plus 1 weeks"
 ExpiresByType text/html "access plus 1 seconds"
+# robots.txt と sitemap は名前が変わらないので短くする（X アクセラレータもこの期間だけ覚える）
+ExpiresByType text/plain "access plus 1 hours"
+ExpiresByType application/xml "access plus 1 hours"
 ExpiresByType text/css "access plus 1 weeks"
 ExpiresByType text/javascript "access plus 1 month"
 ExpiresByType image/gif "access plus 2592000 seconds"

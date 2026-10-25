@@ -75,7 +75,7 @@ pnpm xserver:rollback 20261025-120000    # その控えに戻す（確認が出�
 | --- | --- |
 | `pnpm xserver:pull` | サーバーの `public_html` を `.snapshot/server/public_html/` に取ってくる。サーバーは変わりません |
 | `pnpm xserver:diff` | `dist/` とサーバーの差と判定。`--json` で機械向けの出力 |
-| `pnpm xserver:check` | 主な URL（`/`、sitemap、robots.txt、`og.jpg`、`sw.js`、404、`http://`・`www.`・`/index.html` からの転送、応答ヘッダー、`8180/` の CORS、note のサーバーを向いている `note.uto-usui.com`）を確かめ、エラーログの直近 20 行を出す |
+| `pnpm xserver:check` | 主な URL（`/`、sitemap、robots.txt、`og.jpg`、`sw.js`、404、`http://`・`www.`・`/index.html` からの転送、応答ヘッダー、`8180/` の CORS）を確かめ、エラーログの直近 20 行を出す |
 
 エラーログはエックスサーバーの API で取ります。API キーは パスワード管理アプリ からグローバルのスキル `xserver` の `xs-api.sh` が読みます。
 
