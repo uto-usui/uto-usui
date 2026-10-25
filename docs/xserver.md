@@ -88,4 +88,5 @@ pnpm xserver:rollback 20261025-120000    # その控えに戻す（確認が出�
 | `missing:password-manager(...)` | エラーログを取るときに API キーを読めませんでした。パスワード管理アプリ のロックを解除するか、item（`<パスワード管理アプリの項目>`）があるかを確かめます。公開そのものは SSH だけで済むので、ここで止まっても反映は終わっています |
 | `PUBLIC_GA4_ID がありません` | `.env` を作ります（最初の準備の 4） |
 | `確認に答えられない環境です` | 端末でない所から `xserver:deploy` を呼んでいます。差分を読んで判断したうえで `--yes` を付けます |
+| `robots.txt` など名前の変わらないファイルが古いまま | X アクセラレータが `.htaccess` の Expires の期間だけ覚えています。サーバーキャッシュは off なので、API の削除（`DELETE /server-cache/...`）は効きません。`robots.txt` と sitemap は 1 時間にしてあるので待ちます。HTML と `sw.js` は `no-cache` なので起きません |
 | 公開後の確認に ✖ が出る | どの URL で何が違うかが出ます。`.htaccess` の変更が原因のことが多いので、`public/.htaccess` を見直します。急ぐときは `pnpm xserver:rollback` で戻します |
