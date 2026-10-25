@@ -1,0 +1,92 @@
+---
+import Line from '../atoms/Line.astro'
+import Loader from '../atoms/Loader.astro'
+import Name from '../atoms/Name.astro'
+import Rect from '../atoms/Rect.astro'
+import Sound from '../atoms/Sound.astro'
+import Nav from '../molecules/Nav.astro'
+import Shapes from '../molecules/Shapes.astro'
+---
+
+<header class="organism-fixed">
+  <div class="of__name">
+    <Name text="uto usui" />
+  </div>
+  <div class="of__rect">
+    <Rect />
+  </div>
+  <div class="of__line">
+    <Line />
+  </div>
+  <div class="of__sound">
+    <Sound />
+  </div>
+  <div class="of__nav">
+    <Nav />
+  </div>
+  <div class="of__shapes">
+    <Shapes />
+  </div>
+  <div class="of__loader">
+    <Loader />
+  </div>
+</header>
+
+<style lang="scss">
+  .of__name {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .of__rect {
+    position: fixed;
+    inset: 0;
+    z-index: -9;
+    pointer-events: none;
+  }
+
+  .of__line {
+    position: fixed;
+    inset: 0;
+    z-index: -3;
+    pointer-events: none;
+  }
+
+  .of__sound {
+    position: fixed;
+    bottom: 1rem;
+    left: 1rem;
+    z-index: 9;
+  }
+
+  .of__nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 9;
+
+    @include desktop {
+      top: 0;
+      right: 6rem;
+      left: auto;
+    }
+  }
+
+  .of__shapes {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+  }
+
+  .of__loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    pointer-events: none;
+  }
+</style>

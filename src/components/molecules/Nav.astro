@@ -1,0 +1,80 @@
+---
+import { viewData } from '../../data/view'
+---
+
+<nav class="molecules-nav">
+  <ul class="mn__list">
+    {viewData.nav.map((item) => (
+      <li class="mn__item">
+        <a class="mn__target js-shuffle" href={`#${item}`}>
+          {item}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style lang="scss">
+  .mn__list {
+    display: flex;
+    justify-content: center;
+  }
+
+  .mn__item {
+    width: 6.5rem;
+
+    &:nth-of-type(1) {
+      width: 8.18rem;
+    }
+  }
+
+  .mn__target {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 9rem;
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+    color: $color-gray-level1;
+    letter-spacing: 0.1em;
+
+    @include sizes(-1);
+
+    @include desktop {
+      padding-right: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    &::after {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      content: '';
+      background-color: rgb($color-primary, 0.9);
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform 0.4s $ease-in-cubic;
+    }
+
+    &::before {
+      position: absolute;
+      top: calc(50% + 1.5rem);
+      left: calc(50% - 1px);
+      width: 1px;
+      height: 0.5rem;
+      content: '';
+      background-color: currentcolor;
+    }
+
+    &:hover {
+      color: $color-white;
+
+      &::after {
+        transform: scaleX(1);
+        transform-origin: left center;
+        transition: transform 0.4s $ease-out-cubic;
+      }
+    }
+  }
+</style>

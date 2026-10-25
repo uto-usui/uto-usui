@@ -1,0 +1,35 @@
+---
+interface Props {
+  text: string
+}
+const { text } = Astro.props
+---
+
+<h1 id="atom-name" class="atom-name" aria-label={text}>
+  {[...text].map((c) => (
+    <span aria-hidden="true">
+      <span class="js-name">{c}</span>
+    </span>
+  ))}
+</h1>
+
+<style lang="scss">
+  .atom-name {
+    font-size: 20vw;
+    letter-spacing: -0.05em;
+    opacity: 0.08;
+
+    > span {
+      display: inline-block;
+      min-width: 0.25em;
+      padding-right: 0.1em;
+      margin-right: -0.1em;
+      overflow: hidden;
+
+      > span {
+        display: inline-block;
+        transform: translateX(150%);
+      }
+    }
+  }
+</style>

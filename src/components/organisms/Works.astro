@@ -1,0 +1,146 @@
+---
+import Hed from '../atoms/Hed.astro'
+import Paragraph from '../atoms/Paragraph.astro'
+import Picture from '../atoms/Picture.astro'
+import Space from '../atoms/Space.astro'
+import Tag from '../atoms/Tag.astro'
+import Title from '../atoms/Title.astro'
+import { image } from '../../lib/images'
+import { viewData } from '../../data/view'
+---
+
+<section class="organism-works">
+  <div class="ow__title" data-scroll data-scroll-speed="-1.5">
+    <Title text="_Works" />
+  </div>
+
+  <Space />
+
+  {viewData.works.map((item, index) => (
+    <section id={`ow_figures${index}`} class="ow__item">
+      <div class="ow__texts" data-scroll data-scroll-speed="-1">
+        <div class="ow__name">
+          <Hed text={item.name} />
+        </div>
+
+        <div class="ow__paragraph">
+          <Paragraph text={item.text} />
+        </div>
+
+        <div class="ow__tags">
+          <Tag text={item.tag} />
+        </div>
+
+        <div class="ow__paragraph">
+          <Paragraph
+            text={`<a href='${item.link}' data-color='${item.color}' target='_blank'>Visit To Website_</a>`}
+          />
+        </div>
+      </div>
+      <div class="ow__figures" data-scroll data-scroll-speed="1">
+        <div class="ow__figures-inner">
+          {item.images.map((src, i) => (
+            // 旧サイトは data-scroll-target の綴りを誤っていて、視差は各図自身の位置を基準にしていた。
+            // その動きを残すため、target は付けない
+            <div
+              class="ow__figure"
+              data-scroll
+              data-scroll-speed={i % 2 ? -1 : 1}
+              data-scroll-direction="horizontal"
+            >
+              <div class="ow__figure-inner">
+                <Picture
+                  src={image(src)}
+                  sizes="(min-width: 1200px) 40vw, 100vw"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+</section>
+
+<style lang="scss">
+  .organism-works {
+    padding-right: 2.5rem;
+    padding-left: 2.5rem;
+
+    @include desktop {
+      padding-right: 4.9rem;
+      padding-left: 4.9rem;
+    }
+  }
+
+  .ow__title {
+    margin-right: -4.9rem;
+  }
+
+  .ow__item {
+    @include desktop {
+      display: flex;
+    }
+
+    + .ow__item {
+      @include touch {
+        margin-top: get-line-height(-2, 3, 2);
+      }
+    }
+  }
+
+  .ow__texts {
+    text-align: left;
+
+    @include desktop {
+      width: 62.5%;
+      padding-left: 2.5rem;
+    }
+  }
+
+  .ow__figures {
+    @include touch {
+      margin-top: get-line-height(-2, 3, 1);
+      margin-right: -2.5rem;
+      margin-left: -2.5rem;
+    }
+
+    @include desktop {
+      width: 37.5%;
+    }
+  }
+
+  .ow__figures-inner {
+    @include desktop {
+      transform: perspective(600px) translateY(-40%) rotateX(45deg)
+        rotateZ(40deg) translate3d(-2rem, 0, -18rem);
+    }
+  }
+
+  .ow__figure {
+    overflow: hidden;
+    outline: 1px solid transparent;
+    backface-visibility: hidden;
+
+    + .ow__figure {
+      margin-top: 1rem;
+    }
+  }
+
+  .ow__name {
+    margin-bottom: get-line-height(-2, 3, 1);
+
+    @include desktop {
+      margin-bottom: get-line-height(-2, 3, 2);
+    }
+  }
+
+  .ow__tags {
+    margin-top: get-line-height(-2, 3, 1);
+    margin-bottom: get-line-height(-2, 3, 1);
+
+    @include desktop {
+      margin-bottom: get-line-height(-2, 3, 3);
+    }
+  }
+</style>

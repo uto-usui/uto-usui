@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'h2'> & { text: string }
+const { text, ...attrs } = Astro.props
+---
+
+<h2 class="atom-title" {...attrs}>
+  {text}
+</h2>
+
+<style lang="scss">
+  .atom-title {
+    font-style: italic;
+    font-weight: 700;
+    text-align: right;
+    text-shadow: 0.5em 0.25em 0 $color-yellow;
+    backface-visibility: hidden;
+
+    @include sizes(6);
+
+    @include desktop {
+      @include sizes(7);
+    }
+  }
+</style>

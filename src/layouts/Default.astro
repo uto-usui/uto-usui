@@ -1,0 +1,122 @@
+---
+import 'splitting/dist/splitting.css'
+import 'lenis/dist/lenis.css'
+import '../styles/global.scss'
+import { PUBLIC_GA4_ID } from 'astro:env/client'
+import Fixed from '../components/organisms/Fixed.astro'
+import { meta } from '../data/info'
+import { viewData } from '../data/view'
+
+interface Props {
+  title?: string
+  description?: string
+  // 404 などは検索に出さない
+  noindex?: boolean
+}
+const {
+  title = meta.title,
+  description = meta.description,
+  noindex = false,
+} = Astro.props
+const canonical = new URL(Astro.url.pathname, Astro.site).href
+const ogImage = new URL('/og.jpg', Astro.site).href
+
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'uto usui',
+  url: Astro.site?.href,
+  image: ogImage,
+  jobTitle: 'branding engineer',
+  description: meta.description,
+  sameAs: viewData.about.social.map((s) => s.link),
+}
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={meta.keywords} />
+    <meta name="author" content="uto-usui" />
+    {noindex && <meta name="robots" content="noindex" />}
+    {!noindex && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:site_name" content="uto_ao" />
+    <meta property="og:type" content={meta.ogType} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:site" content="@uto_ao" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {!noindex && (
+      <script type="application/ld+json" set:html={JSON.stringify(person)} />
+    )}
+    {PUBLIC_GA4_ID && (
+      <>
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${PUBLIC_GA4_ID}`}
+        />
+        <script is:inline define:vars={{ id: PUBLIC_GA4_ID }}>
+          window.dataLayer = window.dataLayer || []
+          function gtag() {
+            // gtag.js は配列ではなく arguments そのものを受け取る
+            // eslint-disable-next-line prefer-rest-params
+            dataLayer.push(arguments)
+          }
+          gtag('js', new Date())
+          gtag('config', id)
+        </script>
+      </>
+    )}
+    <noscript>
+      <style>
+        /* JavaScript が動かないときは、登場の動きを待たずに文を見せる */
+        #js-main {
+          opacity: 1 !important;
+        }
+
+        .of__loader {
+          display: none;
+        }
+
+        .atom-name > span > span {
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <div class="layout-default">
+      <Fixed />
+
+      <main id="main" class="ld__main">
+        <slot />
+      </main>
+
+      <audio id="js-bgm" src="/music/bgm.mp3" preload="none" muted></audio>
+    </div>
+
+    <script>
+      import '../scripts/main'
+    </script>
+  </body>
+</html>
+
+<style>
+  .ld__main {
+    overflow: hidden;
+  }
+</style>

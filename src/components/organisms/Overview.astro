@@ -1,0 +1,96 @@
+---
+import Lead from '../atoms/Lead.astro'
+import Paragraph from '../atoms/Paragraph.astro'
+import { viewData } from '../../data/view'
+
+const data = viewData.overview
+const links = data.links.map(
+  (el) =>
+    `${el.title}<a href='${el.link}' target='_blank' data-color="${el.color}">${el.name}</a>`,
+)
+---
+
+<section class="organism-overview">
+  <div id="js-main" class="oo__inner">
+    <div class="oo__main">
+      <div class="oo__lead">
+        <Lead split text={data.title} />
+      </div>
+      <div class="oo__paragraph">
+        {data.text.map((item) => (
+          <Paragraph split text={item} />
+        ))}
+      </div>
+      <div class="oo__paragraph">
+        {links.map((item) => (
+          <Paragraph split text={item} />
+        ))}
+      </div>
+    </div>
+
+    <div class="oo__ghost" aria-hidden="true">
+      <div class="oo__lead">
+        <Lead text={data.title} />
+      </div>
+      <div class="oo__paragraph">
+        {data.text.map((item) => (
+          <Paragraph text={item} />
+        ))}
+      </div>
+      <div class="oo__paragraph">
+        {links.map((item) => (
+          <Paragraph text={item} />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  .organism-overview {
+    max-width: 42.5rem;
+    padding-top: 8.5rem;
+    margin: auto;
+
+    @include touch {
+      padding-right: 2.5rem;
+      padding-left: 2.5rem;
+    }
+
+    @include desktop {
+      padding-top: 17vw;
+    }
+  }
+
+  .oo__inner {
+    position: relative;
+    opacity: 0;
+    will-change: transform, opacity;
+
+    @include touch {
+      padding-bottom: 10rem;
+    }
+
+    @include desktop {
+      min-height: 100vh;
+    }
+  }
+
+  .oo__ghost {
+    visibility: hidden;
+  }
+
+  .oo__main {
+    position: absolute;
+  }
+
+  .oo__lead {
+    margin-bottom: get-line-height(-2, 3, 1);
+  }
+
+  .oo__paragraph {
+    + .oo__paragraph {
+      margin-top: get-line-height(-2, 3, 1);
+    }
+  }
+</style>

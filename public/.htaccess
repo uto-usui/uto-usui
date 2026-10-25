@@ -1,0 +1,68 @@
+# uto-usui.com の公開ディレクトリ（public_html）の設定。リポジトリで管理し、xserver:deploy で反映する。
+
+ErrorDocument 404 /404.html
+
+# http と www と /index.html を https://uto-usui.com/ へ寄せる
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteCond %{SERVER_PORT} !^443$ [OR]
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://uto-usui.com/$1 [R=301,L]
+RewriteCond %{THE_REQUEST} ^.*/index.html
+RewriteRule ^(.*)index.html$ https://uto-usui.com/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} ^(www\.uto-usui\.com)(:80)? [NC]
+RewriteRule ^(.*) https://uto-usui.com/$1 [R=301,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set X-Content-Type-Options "nosniff"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+Header always set Strict-Transport-Security "max-age=31536000"
+
+# HTML と、名前の変わらないファイルは毎回確かめる。ハッシュ付きの /_astro/ は 1 年
+<FilesMatch "\.html$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+<If "%{REQUEST_URI} =~ m#^/_astro/#">
+Header set Cache-Control "public, max-age=31536000, immutable"
+</If>
+# 旧 PWA を解除する sw.js は、キャッシュさせずに毎回取らせる
+<Files "sw.js">
+Header set Cache-Control "no-cache"
+</Files>
+
+# 8180/ の動画は、ほかのサイトから読まれている可能性があるので CORS を許す（旧 .htaccess から）
+<FilesMatch "\.(mp4|webm)$">
+Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+</IfModule>
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault "access plus 1 weeks"
+ExpiresByType text/html "access plus 1 seconds"
+ExpiresByType text/css "access plus 1 weeks"
+ExpiresByType text/javascript "access plus 1 month"
+ExpiresByType image/gif "access plus 2592000 seconds"
+ExpiresByType image/jpg "access plus 2592000 seconds"
+ExpiresByType image/jpeg "access plus 2592000 seconds"
+ExpiresByType image/png "access plus 2592000 seconds"
+ExpiresByType image/svg+xml "access plus 2592000 seconds"
+ExpiresByType image/x-icon "access plus 2592000 seconds"
+ExpiresByType image/avif "access plus 2592000 seconds"
+ExpiresByType image/webp "access plus 2592000 seconds"
+ExpiresByType font/woff2 "access plus 1 month"
+ExpiresByType video/mp4 "access plus 1 month"
+ExpiresByType video/webm "access plus 1 month"
+</IfModule>
+FileETag none
+
+<IfModule mod_deflate.c>
+AddOutputFilterByType DEFLATE text/plain text/html text/xml text/css application/xml application/javascript text/javascript image/svg+xml
+</IfModule>
+
+# エックスサーバーのサーバーキャッシュの設定（旧 .htaccess から）
+SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off
+SetEnvIf Request_URI ".*" Ngx_Cache_StaticMode

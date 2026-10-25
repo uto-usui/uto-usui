@@ -1,0 +1,102 @@
+---
+import Hed from '../atoms/Hed.astro'
+import Picture from '../atoms/Picture.astro'
+import Space from '../atoms/Space.astro'
+import Title from '../atoms/Title.astro'
+import Figures from '../molecules/Figures.astro'
+import YouTube from '../molecules/YouTube.astro'
+import { image } from '../../lib/images'
+import { viewData } from '../../data/view'
+---
+
+<section class="organism-other">
+  <div class="oo__title">
+    <Title text="_Other" data-scroll data-scroll-speed="-1.5" />
+  </div>
+
+  <Space />
+
+  {viewData.other.map((item) => (
+    <section id={`figures-${item.name}`} class="oo__item">
+      <div class="oo__name">
+        <Hed text={item.name} />
+      </div>
+
+      {'images' in item && item.images.length > 0 && (
+        <>
+          <Figures images={item.images} name={item.name} />
+          <Space size={item.name === 'woodwork' ? 'x-small' : 'medium'} />
+        </>
+      )}
+
+      {'youtube' in item && (
+        <div class="oo__figures">
+          <Space />
+          <div class="oo__figures-inner">
+            <div class="oo__figure oo__figure--left">
+              <div
+                data-scroll
+                data-scroll-speed="-0.5"
+                data-scroll-direction="horizontal"
+              >
+                <Picture
+                  src={image(item.image)}
+                  sizes="(min-width: 1200px) 50vw, 100vw"
+                />
+              </div>
+            </div>
+            <div class="oo__figure oo__figure--right">
+              <div
+                data-scroll
+                data-scroll-speed="0.5"
+                data-scroll-direction="horizontal"
+              >
+                <div class="oo__figure-inner">
+                  <YouTube id={item.youtube} title={item.youtubeTitle} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  ))}
+</section>
+
+<style lang="scss">
+  .oo__figures-inner {
+    display: flex;
+  }
+
+  .oo__figure {
+    width: 50%;
+
+    &.oo__figure--right {
+      transform: scale(1.1) translateX(-5%) rotateX(5deg) rotateY(45deg)
+        rotateZ(5deg) translateY(-25%);
+    }
+
+    &.oo__figure--left {
+      transform: scale(1.1) translateX(5%) rotateX(5deg) rotateY(-45deg)
+        rotateZ(-5deg) translateY(-25%);
+    }
+  }
+
+  .oo__figure-inner {
+    position: relative;
+    max-width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+  }
+
+  .oo__name {
+    padding-left: 2.5rem;
+    margin-bottom: get-line-height(-2, 3, 2);
+    text-align: left;
+
+    @include desktop {
+      padding-left: calc(4.9rem + 2.5rem);
+    }
+  }
+</style>

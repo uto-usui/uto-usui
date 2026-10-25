@@ -1,0 +1,115 @@
+---
+import Hed from '../atoms/Hed.astro'
+import Paragraph from '../atoms/Paragraph.astro'
+import Space from '../atoms/Space.astro'
+import Title from '../atoms/Title.astro'
+import { viewData } from '../../data/view'
+
+const data = viewData.about
+---
+
+<section class="organism-about">
+  <div class="oa__title" data-scroll data-scroll-speed="-1.5">
+    <Title text="_About" />
+  </div>
+
+  <Space size="small" />
+
+  <section class="oa__item">
+    <div class="oa__name">
+      <Hed text="skill set" />
+    </div>
+
+    {data.skill.map((item) => (
+      <dl class="oa__desc">
+        <dt class="oa__desc-name">{item.name}</dt>
+        <dd class="oa__desc-value">{item.tags}</dd>
+      </dl>
+    ))}
+  </section>
+
+  <section class="oa__item">
+    <div class="oa__name">
+      <Hed text="social" />
+    </div>
+
+    <ul class="oa__social">
+      {data.social.map((item) => (
+        <li class="aa__social-item">
+          <a
+            href={item.link}
+            data-color={item.color}
+            target="_blank"
+            set:html={item.name}
+          />
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="oa__item">
+    <div class="oa__name">
+      <Hed text="fav" />
+    </div>
+
+    <div class="oa__paragraph">
+      <Paragraph text={data.fav} />
+    </div>
+  </section>
+</section>
+
+<style lang="scss">
+  .organism-about {
+    margin-top: get-line-height(-2, 3, 4);
+  }
+
+  .oa__item {
+    max-width: 42.5rem;
+    margin: auto;
+    text-align: left;
+
+    @include touch {
+      padding-right: 2.5rem;
+      padding-left: 2.5rem;
+    }
+
+    + .oa__item {
+      margin-top: get-line-height(-2, 3, 2);
+    }
+  }
+
+  .oa__name {
+    margin-bottom: get-line-height(-2, 3, 1);
+  }
+
+  .oa__desc {
+    display: flex;
+
+    @include sizes(-2, 3);
+  }
+
+  .oa__desc-name {
+    flex-shrink: 0;
+    width: 5rem;
+    font-weight: 700;
+  }
+
+  .oa__social {
+    display: flex;
+    justify-content: space-between;
+
+    @include sizes(-2, 3);
+
+    @include touch {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  .aa__social-item {
+    @include touch {
+      padding-right: 1em;
+      padding-left: 1em;
+    }
+  }
+</style>

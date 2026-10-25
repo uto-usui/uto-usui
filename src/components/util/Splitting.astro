@@ -1,0 +1,27 @@
+---
+import { plainText, splitHtml } from '../../lib/splitting'
+
+interface Props {
+  text: string
+}
+const { text } = Astro.props
+// リンクを含む文は、リンクに届くように読み上げ用の文を分けない
+const hasLink = /<a\b/.test(text)
+---
+
+{hasLink ? (
+  <span class="util-split">
+    <span class="st__inner" set:html={splitHtml(text)} />
+  </span>
+) : (
+  <span class="util-split">
+    <span class="is-sr-only">{plainText(text)}</span>
+    <span aria-hidden="true" class="st__inner" set:html={splitHtml(text)} />
+  </span>
+)}
+
+<style>
+  .util-split {
+    display: inline-block;
+  }
+</style>

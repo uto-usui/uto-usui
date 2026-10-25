@@ -1,0 +1,49 @@
+---
+type Size = 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
+
+interface Props {
+  size?: Size
+}
+const { size = 'medium' } = Astro.props
+---
+
+<div class:list={['atom-space', `atom-space--${size}`]}></div>
+
+<style lang="scss">
+  $space-sizes: (
+    'x-small': (
+      'mobile': calc(8rem * 8 / 14),
+      'desktop': calc(10rem * 8 / 14),
+    ),
+    'small': (
+      'mobile': calc(8rem * 8 / 10),
+      'desktop': calc(10rem * 8 / 10),
+    ),
+    'medium': (
+      'mobile': calc(8rem * 8 / 8),
+      'desktop': calc(10rem * 8 / 8),
+    ),
+    'large': (
+      'mobile': calc(8rem * 8 / 6),
+      'desktop': calc(10rem * 8 / 6),
+    ),
+    'x-large': (
+      'mobile': calc(8rem * 8 / 2),
+      'desktop': calc(10rem * 8 / 2),
+    ),
+  );
+
+  .atom-space {
+    height: 20rem;
+
+    @each $name, $sizes in $space-sizes {
+      &.atom-space--#{$name} {
+        @each $breakpoint, $size in $sizes {
+          @include from(map-deep-get($breakpoints, $breakpoint)) {
+            height: $size;
+          }
+        }
+      }
+    }
+  }
+</style>

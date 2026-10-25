@@ -1,0 +1,37 @@
+---
+import Space from '../components/atoms/Space.astro'
+import About from '../components/organisms/About.astro'
+import Contact from '../components/organisms/Contact.astro'
+import Other from '../components/organisms/Other.astro'
+import Overview from '../components/organisms/Overview.astro'
+import Works from '../components/organisms/Works.astro'
+import Default from '../layouts/Default.astro'
+---
+
+<Default>
+  <div data-scroll-container class="page-home">
+    <div class="ph__inner">
+      <section id="OVERVIEW" class="ph__section" data-scroll-section>
+        <Overview />
+      </section>
+
+      <section id="WORKS" class="ph__section" data-scroll-section>
+        <Works />
+      </section>
+
+      <section id="ABOUT" class="ph__section" data-scroll-section>
+        <About />
+      </section>
+
+      <Space size="large" />
+
+      <section id="OTHER" class="ph__section" data-scroll-section>
+        <Other />
+      </section>
+
+      <section id="FOOTER" class="ph__section" data-scroll-section>
+        <Contact />
+      </section>
+    </div>
+  </div>
+</Default>

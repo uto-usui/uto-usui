@@ -1,0 +1,206 @@
+// 全部の SCSS の先頭に差し込む変数・関数・mixin（astro.config.mjs の additionalData）。
+// CSS を出力するものは置かない。旧サイトの foundation/{variable,function,mixin} から、使っているものだけを移した
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+
+// - - - - - - - - - - - - - - - - - - - -
+// breakpoint
+// - - - - - - - - - - - - - - - - - - - -
+$tablet: 768px;
+$desktop: 1200px;
+$widescreen: 1440px;
+$fullhd: 1920px;
+$breakpoints: (
+  'mobile': 0,
+  'tablet': 768px,
+  'desktop': 1200px,
+  'widescreen': 1440px,
+  'fullhd': 1920px,
+);
+
+// - - - - - - - - - - - - - - - - - - - -
+// color
+// - - - - - - - - - - - - - - - - - - - -
+$color-primary: #68e3cf;
+$color-black: #3f3a39;
+$color-white: #fff;
+$color-yellow: #ffcd75;
+$color-sky: hsl(218deg 69% 65%);
+$color-gray-level1: #3f3a39;
+$text-color: $color-black;
+
+// - - - - - - - - - - - - - - - - - - - -
+// typography
+// - - - - - - - - - - - - - - - - - - - -
+$base-fontweight: 400;
+$font-sans-serif:
+  'Playfair Display', 'Helvetica Neue', helvetica, arial, yugothic, 'Yu Gothic',
+  游ゴシック体, 游ゴシック, 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic ProN',
+  'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', メイリオ, meiryo,
+  'MS ゴシック', 'MS Gothic', sans-serif;
+
+// - - - - - - - - - - - - - - - - - - - -
+// easing
+// - - - - - - - - - - - - - - - - - - - -
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-out-cubic: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+// - - - - - - - - - - - - - - - - - - - -
+// map
+// - - - - - - - - - - - - - - - - - - - -
+@function map-deep-get($map, $keys...) {
+  @each $key in $keys {
+    $map: map.get($map, $key);
+  }
+
+  @return $map;
+}
+
+// - - - - - - - - - - - - - - - - - - - -
+// responsive
+// - - - - - - - - - - - - - - - - - - - -
+@mixin from($device) {
+  @media screen and (min-width: $device) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (min-width: $tablet), print {
+    @content;
+  }
+}
+
+@mixin touch {
+  @media screen and (max-width: ($desktop - 1px)) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media screen and (min-width: $desktop) {
+    @content;
+  }
+}
+
+@mixin widescreen {
+  @media screen and (min-width: $widescreen) {
+    @content;
+  }
+}
+
+@mixin fullhd {
+  @media screen and (min-width: $fullhd) {
+    @content;
+  }
+}
+
+@mixin overlay($offset: 0) {
+  position: absolute;
+  inset: $offset;
+}
+
+// - - - - - - - - - - - - - - - - - - - -
+// harmonic modular scale
+// https://github.com/ShiftbrainStd/harmonic-modular-scale
+// - - - - - - - - - - - - - - - - - - - -
+$scale-factor: 8;
+$base-rem: 1rem;
+$line-height-unit: 0.25rem;
+
+@function trunc($x) {
+  @if $x < 0 {
+    @return math.ceil($x);
+  }
+
+  @return math.floor($x);
+}
+
+// 7: 8rem / 6: 4rem / 5: 2.667rem / 3: 1.6rem / 2: 1.333rem / 1: 1.143rem / 0: 1rem / -1: 0.889rem / -2: 0.8rem
+@function get-font-size($font-size-degree) {
+  $font-size-degree: trunc($font-size-degree);
+  $fs-n: $scale-factor;
+  $fs-d: $scale-factor - $font-size-degree;
+
+  @if $font-size-degree == 0 {
+    @return $base-rem;
+  }
+
+  @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d});
+}
+
+@function get-line-height(
+  $font-size-degree,
+  $line-height-degree: null,
+  $lines: 1,
+  $as-line-height: false
+) {
+  @if meta.type-of($line-height-degree) != number {
+    @error "$line-height-degree must be a number. Received: #{$line-height-degree}";
+  }
+
+  $font-size-degree: trunc($font-size-degree);
+  $line-height-degree: trunc($line-height-degree);
+  $lines: trunc($lines);
+  $fs-n: $scale-factor;
+  $fs-d: $scale-factor - $font-size-degree;
+  $font-size: math.div($base-rem * $fs-n, $fs-d);
+  $base-line-height-multiple: 1;
+
+  @while $line-height-unit * $base-line-height-multiple < $font-size {
+    $base-line-height-multiple: $base-line-height-multiple + 1;
+  }
+
+  $lh-n: ($base-line-height-multiple + $line-height-degree) * $fs-d;
+  $lh-d: math.div($base-rem, $line-height-unit) * $fs-n;
+
+  @if $as-line-height {
+    @if $lh-n == $lh-d {
+      @return 1;
+    }
+
+    @return calc(1em * #{$lh-n} / #{$lh-d});
+  }
+
+  @if $lh-n == $lh-d {
+    @if $fs-n == $fs-d {
+      @return $base-rem * $lines;
+    }
+
+    @if $lines != 1 {
+      @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d} * #{$lines});
+    }
+
+    @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d});
+  }
+
+  @if $fs-n == $fs-d {
+    @if $lines != 1 {
+      @return calc(#{$base-rem} * #{$lh-n} / #{$lh-d} * #{$lines});
+    }
+
+    @return calc(#{$base-rem} * #{$lh-n} / #{$lh-d});
+  }
+
+  @if $lines != 1 {
+    @return calc(
+      #{$base-rem} * #{$fs-n} / #{$fs-d} * #{$lh-n} / #{$lh-d} * #{$lines}
+    );
+  }
+
+  @return calc(#{$base-rem} * #{$fs-n} / #{$fs-d} * #{$lh-n} / #{$lh-d});
+}
+
+@mixin sizes($font-size-degree, $line-height-degree: null) {
+  font-size: get-font-size($font-size-degree);
+
+  @if meta.type-of($line-height-degree) == number {
+    line-height: get-line-height(
+      $font-size-degree,
+      $line-height-degree,
+      $as-line-height: true
+    );
+  }
+}

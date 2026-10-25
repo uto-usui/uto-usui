@@ -1,0 +1,27 @@
+---
+import Splitting from '../util/Splitting.astro'
+
+interface Props {
+  text: string
+  split?: boolean
+}
+const { text, split = false } = Astro.props
+---
+
+<p class="atom-lead">
+  {split ? <Splitting text={text} /> : <span>{text}</span>}
+</p>
+
+<style lang="scss">
+  .atom-lead {
+    font-style: italic;
+    font-weight: 700;
+    text-align: left;
+
+    @include sizes(2);
+
+    @include desktop {
+      @include sizes(3);
+    }
+  }
+</style>

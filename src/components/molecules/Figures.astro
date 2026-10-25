@@ -1,0 +1,93 @@
+---
+import Picture from '../atoms/Picture.astro'
+import { image } from '../../lib/images'
+
+interface Props {
+  name: string
+  images: readonly (readonly string[])[]
+}
+const { name, images } = Astro.props
+---
+
+<div class:list={['molecule-figures', `molecule-figures--${name}`]}>
+  <div class="mf__inner">
+    {images.map((line, index) => (
+      <div
+        class="mf__line"
+        data-scroll
+        data-scroll-target={`#figures-${name}`}
+        data-scroll-speed={index % 2 ? -1 : 1}
+        data-scroll-direction="horizontal"
+      >
+        {line.map((figure) => (
+          <div class="mf__figure-wrap">
+            <div class="mf__figure">
+              <Picture src={image(figure)} sizes="25vw" />
+            </div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style lang="scss">
+  .molecule-figures {
+    --figures-height: 20rem;
+    --figure-margin: 0.5rem;
+    --figures-inner-width: 200vw;
+    --figures-inner-height: var(--figures-height);
+
+    position: relative;
+    height: var(--figures-height);
+    perspective: 62rem;
+
+    @include desktop {
+      --figures-height: 33rem;
+    }
+  }
+
+  .mf__inner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--figures-inner-width);
+    height: var(--figures-inner-height);
+    transform: translate(-50%, -50%);
+
+    .molecule-figures.molecule-figures--woodwork & {
+      transform: translate3d(-50%, -50%, 0) translateX(-15%) translateY(-25%)
+        translateZ(-200px) rotateX(65.5deg) rotateZ(22deg);
+
+      @include touch {
+        transform: translate3d(-50%, -50%, 0) translateX(-15%) translateY(5%)
+          translateZ(-200px) rotateX(0) rotateZ(25deg);
+      }
+    }
+
+    .molecule-figures.molecule-figures--photograph & {
+      transform: translate3d(-50%, -50%, 0) translateX(15%) translateY(-25%)
+        translateZ(-200px) rotateX(65.5deg) rotateZ(-22deg);
+
+      @include touch {
+        transform: translate3d(-50%, -50%, 0) translateX(15%) translateY(5%)
+          translateZ(-200px) rotateX(0) rotateZ(-25deg);
+      }
+    }
+  }
+
+  .mf__line {
+    display: flex;
+  }
+
+  .mf__figure-wrap {
+    flex: none;
+    width: calc(var(--figures-inner-width) / 8 - var(--figure-margin) * 2);
+    height: calc(
+      (var(--figures-inner-width) / 8 - var(--figure-margin) * 2) * 9 / 16
+    );
+    margin: var(--figure-margin);
+    outline: 1px solid transparent;
+    backface-visibility: hidden;
+  }
+</style>

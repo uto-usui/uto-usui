@@ -1,0 +1,57 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Picture } from 'astro:assets'
+
+interface Props {
+  src: ImageMetadata
+  // 表示される幅。srcset から選ぶときに使う
+  sizes: string
+  width?: number
+  height?: number
+}
+const { src, sizes, width = 16, height = 9 } = Astro.props
+const padding = `calc(100% * ${height} / ${width} / 2)`
+---
+
+<div
+  class="the-picture"
+  style={`padding-top:${padding};padding-bottom:${padding}`}
+>
+  <Picture
+    src={src}
+    alt=""
+    formats={['avif', 'webp']}
+    widths={[512, 1024].filter((w) => w <= src.width)}
+    sizes={sizes}
+    class="tp__img"
+  />
+</div>
+
+<style lang="scss">
+  .the-picture {
+    position: relative;
+    width: 100%;
+    height: 0;
+    overflow: hidden;
+
+    &::after {
+      @include overlay;
+
+      pointer-events: none;
+      content: '';
+      background-image: linear-gradient(45deg, white, rgb(0 0 0 / 0%));
+      mix-blend-mode: lighten;
+      opacity: 0;
+    }
+  }
+
+  .tp__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    object-fit: cover;
+  }
+</style>

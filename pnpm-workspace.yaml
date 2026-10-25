@@ -1,0 +1,6 @@
+# pnpm 10 は allowBuilds を読まない（11 から）。10 の書き方で許可と拒否を分ける
+onlyBuiltDependencies:
+  - sharp
+ignoredBuiltDependencies:
+  # sass の watch 用。ビルドでは使わない
+  - '@parcel/watcher'

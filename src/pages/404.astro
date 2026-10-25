@@ -1,0 +1,35 @@
+---
+import Paragraph from '../components/atoms/Paragraph.astro'
+import Title from '../components/atoms/Title.astro'
+import Default from '../layouts/Default.astro'
+---
+
+<Default title="Not Found | uto usui" noindex>
+  <section class="page-404">
+    <div id="js-main" class="p4__inner">
+      <Title text="_404" />
+      <div class="p4__paragraph">
+        <Paragraph text="The page you are looking for was not found." />
+        <Paragraph text={`<a href="/" data-color="#68E3CF">Back To Top_</a>`} />
+      </div>
+    </div>
+  </section>
+</Default>
+
+<style lang="scss">
+  .page-404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 8.5rem 2.5rem;
+  }
+
+  .p4__inner {
+    opacity: 0;
+  }
+
+  .p4__paragraph {
+    margin-top: get-line-height(-2, 3, 2);
+  }
+</style>

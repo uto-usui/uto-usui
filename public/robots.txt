@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /test/
+
+Sitemap: https://uto-usui.com/sitemap-index.xml

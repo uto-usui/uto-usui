@@ -1,0 +1,21 @@
+---
+import Splitting from '../util/Splitting.astro'
+
+interface Props {
+  text: string
+  split?: boolean
+}
+const { text, split = false } = Astro.props
+---
+
+<p class="atom-paragraph">
+  {split ? <Splitting text={text} /> : <span set:html={text} />}
+</p>
+
+<style lang="scss">
+  .atom-paragraph {
+    text-align: left;
+
+    @include sizes(-2, 3);
+  }
+</style>
