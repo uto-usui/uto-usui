@@ -16,7 +16,7 @@ export const viewData = {
     links: [
       {
         title: 'clip blog_ ',
-        name: 'webmanab-html',
+        name: 'webmanab',
         link: 'https://webmanab.com/',
         color: '#393e46',
       },
@@ -89,7 +89,7 @@ export const viewData = {
       name: 'GQ MEN OF THE YEAR 2018',
       text: '',
       tag: 'Vue / WebGL / Interaction Design / Creative Direction',
-      link: 'https://www.gqjapan.jp/moty/2018/',
+      link: 'https://www.gqjapan.jp/_special/moty/2018/',
       color: '#c9af5b',
       images: [
         'moty2018/1.jpg',
@@ -103,31 +103,35 @@ export const viewData = {
     skill: [
       {
         name: 'Design',
-        tags: 'Figma / Sketch / Photoshop / Illustrator / XD / atomic design / design system',
+        tags: 'Figma / design system / design tokens / accessibility (WCAG) / UX writing / prototyping',
       },
       {
         name: 'HTML',
-        tags: 'EJS / Pug / SEO / semantic markup / accessibility',
+        tags: 'semantic markup / WAI-ARIA / SEO / structured data',
       },
       {
         name: 'CSS',
-        tags: 'CSS4 / Sass / SCSS / Stylus / custom properties / Responsive (Mobile First | fluid layout) / CSS architecture / style guide / tailwindcss / Bootstrap / Bulma',
+        tags: 'Sass / custom properties / container queries / cascade layers / fluid typography / Tailwind CSS / CSS architecture',
       },
       {
         name: 'JavaScript',
-        tags: 'ES2020 / TypeScript / Babel / Vue / React / Nuxt / Next / Storybook / jest / Firebase / PWA / gsap / Three.js / WebGL / CreateJS / p5 / jQuery / npm / yarn / webpack',
+        tags: 'TypeScript / Vue / Nuxt / React / Next / Astro / Vite / Node.js / WebGL / Three.js / gsap',
       },
       {
-        name: 'PHP',
-        tags: 'Wordpress / SNS API',
+        name: 'Quality',
+        tags: 'Storybook / Playwright / Vitest / visual regression testing / axe / Lighthouse / ESLint / Stylelint',
+      },
+      {
+        name: 'AI',
+        tags: 'Claude Code / Codex / MCP / agent skills / LLM-driven development',
       },
       {
         name: 'Sound',
-        tags: 'Protools / Logic',
+        tags: 'Pro Tools / Logic',
       },
       {
         name: 'Other',
-        tags: 'MacOS / Git / Docker / Terminal / Slack',
+        tags: 'macOS / Git / GitHub Actions / Docker / Cloudflare / pnpm',
       },
     ],
     social: [
@@ -147,7 +151,7 @@ export const viewData = {
         color: '#1DA1F2',
       },
       {
-        link: 'https://github.com/uto-usui/uto-usui',
+        link: 'https://github.com/uto-usui',
         name: 'Github_',
         color: '#24292e',
       },

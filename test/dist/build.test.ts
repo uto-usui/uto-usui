@@ -32,7 +32,7 @@ describe('index.html', () => {
     )
     expect(ld['@type']).toBe('Person')
     expect(ld.url).toBe('https://uto-usui.com/')
-    expect(ld.sameAs).toContain('https://github.com/uto-usui/uto-usui')
+    expect(ld.sameAs).toContain('https://github.com/uto-usui')
   })
 
   it('外部の script は GA4 だけ。polyfill.io と KARTE は読まない', () => {
