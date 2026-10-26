@@ -12,7 +12,7 @@ description: >
 
 公開は CI ではなく、手元からこのスキルで行う。エックスサーバーはSSH の接続元の制限が on なので、GitHub Actions からは SSH できない（外すと SSH を広く開けることになるので外さない）。
 
-スクリプトは `scripts/xserver/cli.ts`、人向けの説明は `docs/xserver.md`。同期で消してはいけないサーバーだけのもの（`note.uto-usui.com/`、`8180/`、`assets/` など）は、スクリプトの `EXCLUDES` が除外している。
+スクリプトは `scripts/xserver/cli.ts`、人向けの説明は `docs/xserver.md`。同期で消してはいけないサーバーだけのもの（`8180/` など）は、スクリプトの `EXCLUDES` が除外している。
 
 ## 流れ
 

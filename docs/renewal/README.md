@@ -33,9 +33,9 @@ Nuxt 2 で作ったポートフォリオ（1 ページ）を、最新のフレ�
 
   | パス | 中身 | 扱い |
   | --- | --- | --- |
-  | `note.uto-usui.com/` | サブドメイン `note.uto-usui.com` 用に作られたディレクトリ（メモ「note Proで利用する」）。2022-10 の `index.html` と画像。DNS の A レコードは note のサーバー（18.176.100.108）を向いていて、ここからは配っていない | 残す。同期の対象から外す |
+  | `note.uto-usui.com/` | サブドメイン `note.uto-usui.com` 用に作られたディレクトリ（メモ「note Proで利用する」）。2022-10 の `index.html` と画像。DNS の A レコードは note のサーバー（18.176.100.108）を向いていて、ここからは配っていない | 公開のあと、ユーザーの判断で消した（log.md の 7.6） |
   | `8180/` | 2020-05 の動画 5 本（17MB） | 残す。同期の対象から外す |
-  | `assets/` | 2018 年ごろの旧サイトの CSS / JS / 画像 / BGM（97 ファイル、13MB） | 残す。同期の対象から外す。消すかどうかは公開のあとで決める |
+  | `assets/` | 2018 年ごろの旧サイトの CSS / JS / 画像 / BGM（97 ファイル、13MB） | 公開のあと、ユーザーの判断で消した（log.md の 7.6） |
   | `default_page.png`、`.nojekyll`、`200.html` | サーバーの初期ページの画像、GitHub Pages の目印、Nuxt の SPA 用の予備ページ | 新しいビルドに要らないので、公開のときに消える。`default_page.png` だけは残す |
 
   サブドメイン `test.uto-usui.com` の公開ディレクトリ（`public_html/test`）は、設定だけあってディレクトリはありません。`robots.txt` の `Disallow: /test/` はこれに当たります。
@@ -227,7 +227,7 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 | `pnpm xserver:rollback` | ④ で複製したもののうち、指定したものを `public_html` に戻す |
 | `pnpm xserver:check` | 主な URL（`/`、`/sw.js`、`/sitemap.xml`、`/og.jpg`、`http://`・`www.` からの転送）の応答を確かめ、API でエラーログを取る |
 
-- rsync の除外: `.git`、`node_modules`、`.env`、`.DS_Store`、`.xserver.json`。加えて、サーバーにだけあるもの（`/note.uto-usui.com/`、`/8180/`、`/assets/`、`/test/`、`/default_page.png`）を除外します。除外したものは `--delete` でも消えません。除外の一覧はスクリプトの中の 1 か所にまとめ、サーバーにだけ置くものが増えたらここに足します。
+- rsync の除外: `.git`、`node_modules`、`.env`、`.DS_Store`、`.xserver.json`。加えて、サーバーにだけあるもの（`/8180/`、`/test/`、`/default_page.png`）を除外します（`/note.uto-usui.com/` と `/assets/` は公開のあとに消したので外した）。除外したものは `--delete` でも消えません。除外の一覧はスクリプトの中の 1 か所にまとめ、サーバーにだけ置くものが増えたらここに足します。
 - SSH の鍵は `XSERVER_SSH_KEY`（既定は `~/.ssh/<鍵のファイル>`）で渡します。API キーは使いません。エラーログの取得だけ、グローバルのスキルの `xs-api.sh` を通します。
 - 人が手で叩くときは ③ で一覧を見て答えます。Claude Code から呼ぶときは、7.4 の判断を済ませてから `--yes` を付けます。
 

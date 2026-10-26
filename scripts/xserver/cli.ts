@@ -33,12 +33,8 @@ export const EXCLUDES = [
   '.env',
   '.DS_Store',
   '.xserver.json',
-  // サブドメイン note.uto-usui.com 用に作られたディレクトリ（2026-10 時点で DNS は note のサーバーを向いていて、ここは使われていない）
-  '/note.uto-usui.com/',
   // 2020 年の動画。.htaccess で CORS を許していて、ほかのサイトから読まれている可能性がある
   '/8180/',
-  // 2018 年ごろの旧サイトのファイル
-  '/assets/',
   // サブドメイン test.uto-usui.com の公開ディレクトリ（設定だけあって、今はディレクトリがない）
   '/test/',
   // サーバーの初期ページの画像
