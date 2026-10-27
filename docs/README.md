@@ -24,7 +24,7 @@ pnpm verify     # lint / format / 型 / unit / build / dist / E2E
 
 ## 公開
 
-CI はビルドとテストの確認だけで、公開はしません。公開は手元から行います。手順は [xserver.md](xserver.md) にあります。Claude Code には「デプロイして」と頼めば、スキル `xserver-sync` で進めます。
+CI はビルドとテストの確認だけで、公開はしません。master にマージすると、手元の Mac の launchd が 5 分以内に出します（`pnpm xserver:auto:install` で入れます）。手で出すときの手順も [xserver.md](xserver.md) にあります。Claude Code には「デプロイして」と頼めば、スキル `xserver-sync` で進めます。
 
 ```bash
 pnpm xserver:deploy

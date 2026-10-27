@@ -28,6 +28,8 @@
     "xserver:deploy": "node scripts/xserver/cli.ts deploy",
     "xserver:rollback": "node scripts/xserver/cli.ts rollback",
     "xserver:check": "node scripts/xserver/cli.ts check",
+    "xserver:auto:install": "bash scripts/xserver/launchagent/install.sh",
+    "xserver:auto:uninstall": "bash scripts/xserver/launchagent/uninstall.sh",
     "verify": "pnpm lint && pnpm format:check && pnpm check && pnpm test && pnpm build && pnpm test:dist && pnpm test:e2e"
   },
   "dependencies": {

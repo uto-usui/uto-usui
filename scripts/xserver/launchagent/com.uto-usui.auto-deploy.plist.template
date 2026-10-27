@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Label</key>
+	<string>com.uto-usui.auto-deploy</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/bash</string>
+		<string>{{BASE}}/auto-deploy.sh</string>
+	</array>
+	<key>EnvironmentVariables</key>
+	<dict>
+		<key>HOME</key>
+		<string>{{HOME}}</string>
+		<key>USER</key>
+		<string>{{USER}}</string>
+		<key>PATH</key>
+		<string>{{PATH}}</string>
+		<key>AUTO_DEPLOY_DIR</key>
+		<string>{{BASE}}</string>
+	</dict>
+	<key>StartInterval</key>
+	<integer>300</integer>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>ProcessType</key>
+	<string>Background</string>
+	<key>LowPriorityIO</key>
+	<true/>
+	<key>StandardOutPath</key>
+	<string>{{LOG}}</string>
+	<key>StandardErrorPath</key>
+	<string>{{LOG}}</string>
+</dict>
+</plist>

@@ -3,14 +3,16 @@
  *
  *   pnpm xserver:pull                 サーバー → .snapshot/server/public_html（サーバーは変えない）
  *   pnpm xserver:diff [--json]        dist/ とサーバーの差（dry-run）と、公開してよいかの判定
- *   pnpm xserver:deploy [--yes] [--no-build]
+ *   pnpm xserver:deploy [--yes] [--no-build] [--only-if-safe] [--no-error-log]
  *                                     ビルド → 差 → 確認 → サーバー側に控え → rsync --delete → 公開後の確認
+ *                                     --only-if-safe は判定が「確認が要る」なら何もせず EXIT.unsafe で終える（自動デプロイ用）
  *   pnpm xserver:rollback [<控えの名前>] [--yes]
  *                                     控えの一覧。名前を渡すと、その控えに戻す
- *   pnpm xserver:check                公開後の確認（主な URL の応答とエラーログ）
+ *   pnpm xserver:check [--no-error-log]
+ *                                     公開後の確認（主な URL の応答とエラーログ）
  *
- * SSH の鍵は XSERVER_SSH_KEY（既定は ~/.ssh/<鍵のファイル>）。API キーは使わない。
- * エラーログだけ、グローバルのスキル xserver の xs-api.sh を通す。
+ * サーバー名・鍵・ポートなど手元の設定は、コミットしない .xserver.json に置く（docs/xserver.md）。
+ * 鍵は XSERVER_SSH_KEY で上書きできる。API キーは使わない。
  */
 import { spawnSync, type SpawnSyncOptions } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync } from 'node:fs'
@@ -23,6 +25,10 @@ type Config = {
   domain: string
   deploy_path: string
   deploy_source: string
+  ssh_key: string
+  ssh_port?: string
+  // 直近のエラーログを標準出力に出すコマンド（argv）。無ければエラーログは取らない
+  error_log_command?: string[]
 }
 
 // サーバーにだけ置いてあり、同期で消してはいけないもの。ここに書いたものは --delete でも消えない。
@@ -42,14 +48,22 @@ export const EXCLUDES = [
 ]
 
 const BACKUP_KEEP = 3
-const SSH_PORT = '<SSH のポート>'
+// 自動デプロイ（scripts/xserver/auto-deploy.sh）が見分ける終了コード
+export const EXIT = { unsafe: 3, checkFailed: 4 } as const
 
 function loadConfig(): Config {
   if (!existsSync('.xserver.json')) {
     fail('.xserver.json がありません（docs/xserver.md の「最初の準備」）')
   }
-  return JSON.parse(readFileSync('.xserver.json', 'utf8'))
+  const c: Config = JSON.parse(readFileSync('.xserver.json', 'utf8'))
+  if (!c.ssh_key && !process.env.XSERVER_SSH_KEY)
+    fail(
+      '.xserver.json に ssh_key がありません（docs/xserver.md の「最初の準備」）',
+    )
+  return c
 }
+
+const expandHome = (p: string) => p.replace(/^~(?=\/|$)/, homedir())
 
 function fail(message: string): never {
   console.error(`✖ ${message}`)
@@ -66,17 +80,16 @@ function run(
   return r
 }
 
-const sshKey = () =>
-  process.env.XSERVER_SSH_KEY ??
-  join(homedir(), '.ssh', '<鍵のファイル>')
+const sshKey = (c: Config) =>
+  expandHome(process.env.XSERVER_SSH_KEY ?? c.ssh_key)
 
 function remote(c: Config) {
   const user = c.servername.split('.')[0]
   const sshArgs = [
     '-i',
-    sshKey(),
+    sshKey(c),
     '-p',
-    SSH_PORT,
+    c.ssh_port ?? '22',
     '-o',
     'StrictHostKeyChecking=accept-new',
   ]
@@ -136,6 +149,10 @@ export function judge(changes: Change[], remoteFileCount: number): Verdict {
   }
   return { proceed: reasons.length === 0, reasons }
 }
+
+// --only-if-safe のときは、判定が「確認が要る」なら --yes があっても反映しない
+export const stopsUnsafe = (verdict: Verdict, args: string[]) =>
+  args.includes('--only-if-safe') && !verdict.proceed
 
 function diff(c: Config) {
   if (!existsSync(join(c.deploy_source, 'index.html'))) {
@@ -251,6 +268,10 @@ async function deploy(c: Config, args: string[]) {
     console.log('\n差分がないので、反映しません')
     return
   }
+  if (stopsUnsafe(d.verdict, args)) {
+    console.error('\n✖ 確認が要る差分なので、反映しません（--only-if-safe）')
+    process.exit(EXIT.unsafe)
+  }
   if (!yes && !(await confirm('\nこの差分をサーバーに反映しますか')))
     fail('取りやめました')
 
@@ -276,7 +297,8 @@ async function deploy(c: Config, args: string[]) {
       `rsync に失敗しました。pnpm xserver:rollback ${saved.split('/').pop()} で戻せます`,
     )
   console.log('\n反映しました')
-  check(c)
+  if (!check(c, { errorLog: !args.includes('--no-error-log') }))
+    process.exitCode = EXIT.checkFailed
 }
 
 function listBackups(c: Config) {
@@ -304,7 +326,7 @@ async function rollback(c: Config, args: string[]) {
   )
   if (res.status !== 0) fail(`戻せませんでした\n${res.stderr}`)
   console.log(`${name} に戻しました`)
-  check(c)
+  if (!check(c)) process.exitCode = 1
 }
 
 // --- pull ---
@@ -333,7 +355,8 @@ type Probe = {
   body?: RegExp
 }
 
-function check(c: Config) {
+// エラーログを取るコマンドが認証を求めることがあるので、バックグラウンドの自動デプロイからは errorLog: false で呼ぶ
+function check(c: Config, { errorLog = true } = {}) {
   const site = `https://${c.domain}`
   const probes: Probe[] = [
     { url: `${site}/`, status: 200, body: /<title>uto usui/ },
@@ -402,22 +425,17 @@ function check(c: Config) {
     if (problems.length) ok = false
   }
 
-  const api = join(homedir(), '<エラーログを取るコマンド>')
-  if (existsSync(api)) {
-    const log = run(api, [
-      'GET',
-      `/v1/server/${c.servername}/error-log?domain=${c.domain}&lines=20`,
-    ])
+  if (errorLog && c.error_log_command?.length) {
+    const [cmd, ...cmdArgs] = c.error_log_command
+    const log = run(expandHome(cmd), cmdArgs)
     console.log(
       log.status === 0
         ? `\nエラーログ（直近 20 行）:\n${log.stdout}`
         : `\nエラーログを取れませんでした: ${log.stderr.trim()}`,
     )
   }
-  if (!ok) {
-    console.error('\n公開後の確認で問題がありました')
-    process.exitCode = 1
-  }
+  if (!ok) console.error('\n公開後の確認で問題がありました')
+  return ok
 }
 
 function readEnvFile(): Record<string, string> {
@@ -448,7 +466,9 @@ async function main() {
     case 'rollback':
       return rollback(c, args)
     case 'check':
-      return check(c)
+      if (!check(c, { errorLog: !args.includes('--no-error-log') }))
+        process.exitCode = 1
+      return
     default:
       fail('pull / diff / deploy / rollback / check のどれかを指定してください')
   }

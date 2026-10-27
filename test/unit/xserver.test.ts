@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { judge, parseItemize } from '../../scripts/xserver/cli'
+import { judge, parseItemize, stopsUnsafe } from '../../scripts/xserver/cli'
 
 describe('parseItemize', () => {
   it('openrsync の --itemize-changes を読む', () => {
@@ -53,5 +53,16 @@ describe('judge', () => {
       path: `_astro/${i}.js`,
     }))
     expect(judge(changes, 100).proceed).toBe(false)
+  })
+})
+
+describe('stopsUnsafe', () => {
+  const safe = { proceed: true, reasons: [] }
+  const unsafe = { proceed: false, reasons: ['.htaccess が変わる'] }
+
+  it('--only-if-safe のときだけ、確認が要る差分で止める', () => {
+    expect(stopsUnsafe(unsafe, ['--yes', '--only-if-safe'])).toBe(true)
+    expect(stopsUnsafe(safe, ['--yes', '--only-if-safe'])).toBe(false)
+    expect(stopsUnsafe(unsafe, ['--yes'])).toBe(false)
   })
 })

@@ -2,9 +2,7 @@
 
 Nuxt 2 で作ったポートフォリオ（1 ページ）を、最新のフレームワークに載せ替える計画です。見た目は変えません。ホスティングはエックスサーバーのままで、手元の CLI からサーバーと同期できるようにします。
 
-進め方は webmanab のリニューアル（`../webmanab/docs/renewal/`）にそろえます。webmanab は記事が 1030 本あったので文書を 10 本に分けましたが、こちらは 1 ページなので、この文書 1 本にまとめます。
-
-作業の経緯と、思っていたのと違ったこと、トラブルは [log.md](log.md) にまとめました。
+進め方は webmanab のリニューアルにそろえます。webmanab は記事が 1030 本あったので文書を 10 本に分けましたが、こちらは 1 ページなので、この文書 1 本にまとめます。
 
 ## 1. 前提になった事実（2026-10-25 に確認）
 
@@ -23,7 +21,7 @@ Nuxt 2 で作ったポートフォリオ（1 ページ）を、最新のフレ�
 
 ### 1.2 今の本番（`https://uto-usui.com/`）
 
-- エックスサーバー `<サーバー ID>.xsrv.jp` の追加ドメインです。公開ディレクトリは `/home/<サーバー ID>/uto-usui.com/public_html` です。ネームサーバーもエックスサーバーです。
+- エックスサーバーの追加ドメインです。ネームサーバーもエックスサーバーです。
 - `http://` と `www.` は `https://uto-usui.com/` へ 301 で転送されています。転送は `public_html/.htaccess` の `mod_rewrite` でやっています（`/index.html` を `/` へ寄せる転送も同じ場所です）。
 - `public_html/.htaccess`（2021-03-01 更新）には、ほかに次の設定があります。新しい `.htaccess` に持っていくものと、書き換えるものを 4 章で決めます。
   - `mod_expires` のキャッシュ期間（HTML は 1 秒、画像は 30 日など）と `mod_deflate` の圧縮。
@@ -33,9 +31,9 @@ Nuxt 2 で作ったポートフォリオ（1 ページ）を、最新のフレ�
 
   | パス | 中身 | 扱い |
   | --- | --- | --- |
-  | `note.uto-usui.com/` | サブドメイン `note.uto-usui.com` 用に作られたディレクトリ（メモ「note Proで利用する」）。2022-10 の `index.html` と画像。DNS の A レコードは note のサーバー（18.176.100.108）を向いていて、ここからは配っていない | 公開のあと、ユーザーの判断で消した（log.md の 7.6） |
+  | `note.uto-usui.com/` | サブドメイン用に作られたディレクトリ。DNS は note のサーバーを向いていて、ここからは配っていない | 公開のあと消した |
   | `8180/` | 2020-05 の動画 5 本（17MB） | 残す。同期の対象から外す |
-  | `assets/` | 2018 年ごろの旧サイトの CSS / JS / 画像 / BGM（97 ファイル、13MB） | 公開のあと、ユーザーの判断で消した（log.md の 7.6） |
+  | `assets/` | 2018 年ごろの旧サイトの CSS / JS / 画像 / BGM（97 ファイル、13MB） | 公開のあと消した |
   | `default_page.png`、`.nojekyll`、`200.html` | サーバーの初期ページの画像、GitHub Pages の目印、Nuxt の SPA 用の予備ページ | 新しいビルドに要らないので、公開のときに消える。`default_page.png` だけは残す |
 
   サブドメイン `test.uto-usui.com` の公開ディレクトリ（`public_html/test`）は、設定だけあってディレクトリはありません。`robots.txt` の `Disallow: /test/` はこれに当たります。
@@ -55,13 +53,10 @@ Nuxt 2 で作ったポートフォリオ（1 ページ）を、最新のフレ�
 - PWA の `sw.js`（workbox 5、`skipWaiting`、`/?standalone=true` を precache）と manifest を配っています。`robots.txt` は `Disallow: /test/` だけです。`sitemap.xml` と 404 ページはありません（404 はサーバーの既定のページです）。
 - 応答のヘッダーは `cache-control: max-age=1` です。サーバー側のブラウザキャッシュ設定とサーバーキャッシュはどちらも off で、X アクセラレータは v1 です。
 
-### 1.3 エックスサーバーの状態（API で確認）
+### 1.3 エックスサーバーの状態
 
-| 項目 | 値 | 計画への影響 |
-| --- | --- | --- |
-| SSH | 2026-10-25 に有効にし、`~/.ssh/<鍵のファイル>` の公開鍵を登録しました | 7.1 の 1 は済みです |
-| SSH の接続元の制限 | on | GitHub Actions のランナーからは SSH できないので、CI からは rsync できません（7.4） |
-| 同じサーバーにあるもの | ほかのサイト | 同期は `uto-usui.com/public_html` の中に閉じます。ほかのディレクトリには触りません |
+- SSH は鍵で入ります。サーバーは SSH の接続元を絞っているので、GitHub Actions からは rsync できません（7.4）。
+- 同じサーバーにはほかのサイトもあります。同期はこのサイトの公開ディレクトリの中に閉じ、ほかのディレクトリには触りません。
 
 ### 1.4 退避済みのもの
 
@@ -164,7 +159,7 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 | 分類 | やること |
 | --- | --- |
 | 安全 | polyfill.io の読み込みを消します。`.htaccess` で応答ヘッダー（`X-Content-Type-Options`、`Referrer-Policy`、`Permissions-Policy`、HSTS）を足します。CSP は Astro の `security.csp` で `<meta>` に出します。script と `<style>` はハッシュで許し、外は GA4 と YouTube（押されたあとの iframe）だけを許します。splitting が要素の `style` 属性を使うので、`style-src-attr` だけ `unsafe-inline` にしました |
-| 計測 | GA4（`G-EFFLZF7XMD`）は続けます。ID は環境変数で渡し、本番のビルドでだけ読みます。Google Search Console に `uto-usui.com` をドメインプロパティで登録し（確認用の TXT レコードは API で足しました）、sitemap を送りました（2026-10-25）。登録は webmanab.com と同じ個人の Google アカウントで行います |
+| 計測 | GA4（`G-EFFLZF7XMD`）は続けます。ID は環境変数で渡し、本番のビルドでだけ読みます。Google Search Console に `uto-usui.com` をドメインプロパティで登録し（確認用の TXT レコードは API で足しました）、sitemap を送りました（2026-10-25）。 |
 | 検索・共有 | `@astrojs/sitemap` で `sitemap.xml` を作り、`robots.txt` から指します。OGP と Twitter Card は今の内容のまま、`og:image` の絶対 URL と `canonical` を正しく出します。人物の構造化データ（JSON-LD の `Person`）を足します。404 ページを作ります |
 | 速さ | ハッシュ付きの `/_astro/*` は 1 年キャッシュ、HTML は毎回確かめる、という設定を `.htaccess` に書きます（今は `max-age=1`）。BGM は押されてから読み込みます。Core Web Vitals を Lighthouse で旧サイトと比べ、悪くならないことを確かめます |
 | a11y | 「今より悪くしない」を守ります。OS で「視差効果を減らす」を選んでいる人には、慣性スクロールと大きな動きを止めます（`prefers-reduced-motion`）。動きを減らしていない人の見た目は変わりません。直す順番は axe の結果を一覧にしてから決めます |
@@ -185,7 +180,7 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 | 6 | head、SEO、計測、`.htaccess`（4 章） | **済み**。`test/dist/` で確かめる |
 | 7 | エックスサーバーとの同期（7 章） | **済み**。dry-run で、旧サイトの `_nuxt/` などの削除と `.htaccess` の変更が「確認が要る」と判定された |
 | 8 | 比べて仕上げる | **済み**（3.3） |
-| 9 | 公開する | **済み**（2026-10-25、PR #1）。`xserver:deploy` で入れ替えた（控えは `~/backup/uto-usui.com/20261025-113529/`）。公開後の確認は、`robots.txt` が X アクセラレータのキャッシュで古いまま返ったほかは通った。同じ日に Search Console にドメインプロパティで登録し（確認用の TXT は API で追加）、sitemap を送った |
+| 9 | 公開する | **済み**（2026-10-25、PR #1）。`xserver:deploy` で入れ替えた。公開後の確認は、`robots.txt` が X アクセラレータのキャッシュで古いまま返ったほかは通った。同じ日に Search Console にドメインプロパティで登録し（確認用の TXT は API で追加）、sitemap を送った |
 
 ## 6. やらないこと
 
@@ -198,22 +193,13 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 
 ## 7. エックスサーバーとの同期
 
-手順と破壊的な操作の確認の決まりは、グローバルのスキル `xserver`とその公式の部分に従います。このリポジトリには、このサイト向けの薄い層だけを置きます。
+サーバーの設定（SSH の有効化、鍵の登録、DNS など）はこのリポジトリの外で扱います。このリポジトリには、このサイトを同期する薄い層だけを置きます。
 
 ### 7.1 最初に 1 回だけやること
 
-1. SSH を有効にし、手元の `~/.ssh/<鍵のファイル>.pub` を API で登録する（**済み**。2026-10-25）。
-2. `ssh -p <SSH のポート> <サーバー ID>@<サーバー ID>.xsrv.jp` で `public_html` の中身と `.htaccess` を見て、`www` と `http` の転送をどこでしているか確かめる（**済み**。1.2 に書きました）。
-3. `.xserver.json` を作る（`.gitignore` に入れます。公式のスキルの決まりです。**済み**）。
-
-   ```json
-   {
-     "servername": "<サーバー ID>.xsrv.jp",
-     "domain": "uto-usui.com",
-     "deploy_path": "/home/<サーバー ID>/uto-usui.com/public_html",
-     "deploy_source": "./dist"
-   }
-   ```
+1. SSH を有効にし、公開鍵を登録する（**済み**）。
+2. SSH で `public_html` の中身と `.htaccess` を見て、`www` と `http` の転送をどこでしているか確かめる（**済み**。1.2 に書きました）。
+3. サーバー名・公開ディレクトリ・鍵の場所を書いた `.xserver.json` を作る（`.gitignore` に入れます。**済み**）。中身は [../xserver.md](../xserver.md) にあります。
 
 ### 7.2 スクリプト
 
@@ -223,22 +209,22 @@ Lighthouse 12.8.2（手元、GA4 などの外部への通信は止めて測っ�
 | --- | --- |
 | `pnpm xserver:pull` | サーバーの `public_html` を `.snapshot/server/` に rsync で取ってくる（サーバー → 手元。サーバーは変えません） |
 | `pnpm xserver:diff` | `dist/` とサーバーの差を `rsync -n --itemize-changes --delete` で出す。追加・更新・削除されるファイルの一覧になります |
-| `pnpm xserver:deploy` | 次を順に行う。① `pnpm build` ② diff を表示 ③ 確認を求める（`--yes` で省く）④ サーバー側で `public_html` を `~/backup/uto-usui.com/<日時>/` に複製（直近 3 つを残す）⑤ `rsync --delete` で反映 ⑥ 公開後の確認 |
+| `pnpm xserver:deploy` | 次を順に行う。① `pnpm build` ② diff を表示 ③ 確認を求める（`--yes` で省く）④ サーバー側で `public_html` を控えとして複製（直近 3 つを残す）⑤ `rsync --delete` で反映 ⑥ 公開後の確認 |
 | `pnpm xserver:rollback` | ④ で複製したもののうち、指定したものを `public_html` に戻す |
 | `pnpm xserver:check` | 主な URL（`/`、`/sw.js`、`/sitemap.xml`、`/og.jpg`、`http://`・`www.` からの転送）の応答を確かめ、API でエラーログを取る |
 
 - rsync の除外: `.git`、`node_modules`、`.env`、`.DS_Store`、`.xserver.json`。加えて、サーバーにだけあるもの（`/8180/`、`/test/`、`/default_page.png`）を除外します（`/note.uto-usui.com/` と `/assets/` は公開のあとに消したので外した）。除外したものは `--delete` でも消えません。除外の一覧はスクリプトの中の 1 か所にまとめ、サーバーにだけ置くものが増えたらここに足します。
-- SSH の鍵は `XSERVER_SSH_KEY`（既定は `~/.ssh/<鍵のファイル>`）で渡します。API キーは使いません。エラーログの取得だけ、グローバルのスキルの `xs-api.sh` を通します。
+- SSH の鍵は `.xserver.json` の `ssh_key` で渡します。API キーは使いません。エラーログは、`.xserver.json` に取り方のコマンドを書いたときだけ取ります。
 - 人が手で叩くときは ③ で一覧を見て答えます。Claude Code から呼ぶときは、7.4 の判断を済ませてから `--yes` を付けます。
 
 ### 7.3 エージェント向けのスキルと人向けのガイド
 
-- `.claude/skills/xserver-sync/SKILL.md`: 7.4 の流れと判断の基準を書きます。サーバーの設定（SSH、ドメイン、DNS、キャッシュ）を触るときは、グローバルの `xserver` スキルに任せます。
-- `docs/xserver.md`: 人が CLI で操作するときのガイドです。最初の準備（7.1）、毎回の公開、戻し方、よくあるエラー（`Permission denied (publickey)`、SSH の接続元の制限、`missing:password-manager`）を書きます。
+- `.claude/skills/xserver-sync/SKILL.md`: 7.4 の流れと判断の基準を書きます。サーバーの設定（SSH、ドメイン、DNS、キャッシュ）には触りません。
+- `docs/xserver.md`: 人が CLI で操作するときのガイドです。最初の準備（7.1）、毎回の公開、戻し方、よくあるエラーを書きます。
 
 ### 7.4 公開の流れ
 
-PR を master にマージしたら、手元の Claude Code がスキル `xserver-sync` で公開します。CI はビルドとテストの確認だけで、公開はしません。SSH の接続元の制限が on なので、GitHub Actions からは SSH できないためです（制限を外すと SSH を広く開けることになるので、外しません）。
+PR を master にマージしたら、手元の Claude Code がスキル `xserver-sync` で公開します。CI はビルドとテストの確認だけで、公開はしません。サーバーが SSH の接続元を絞っていて、GitHub Actions からは SSH できないためです。
 
 きっかけは、Claude Code で PR をマージしたとき（続けて公開に進みます）か、「デプロイして」と言われたときです。スキルは次の順で進めます。
 
@@ -254,4 +240,4 @@ PR を master にマージしたら、手元の Claude Code がスキル `xserve
 | ビルドが作らないファイルの削除（サーバーにだけ置いたもの）、`.htaccess` の変更、`index.html` が消える、ファイル数が大きく減る | 止めて、一覧を見せて確認を取る |
 | 1 の条件を満たしていない、ビルドやテストが落ちた | 公開しない。理由を報告する |
 
-`rsync --delete` は、グローバルの `xserver` スキルでは毎回ユーザーの確認が要る操作です。このサイトでは、上の表の 1 行目に当たる差分なら確認なしで進めてよい、とユーザーが決めました（2026-10-25）。反映の前に必ずサーバー側へ控えを取るので、`pnpm xserver:rollback` で戻せます。
+`rsync --delete` は、ふつうは毎回ユーザーの確認が要る操作です。このサイトでは、上の表の 1 行目に当たる差分なら確認なしで進めてよい、とユーザーが決めました（2026-10-25）。反映の前に必ずサーバー側へ控えを取るので、`pnpm xserver:rollback` で戻せます。

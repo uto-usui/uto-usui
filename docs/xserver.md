@@ -1,28 +1,29 @@
 # エックスサーバーの操作ガイド
 
-uto-usui.com はエックスサーバー（サーバー `<サーバー ID>.xsrv.jp`）に置いています。公開は CI ではなく、手元から CLI で行います。Claude Code に頼むときは「デプロイして」と言えば、スキル `xserver-sync`（`.claude/skills/xserver-sync/SKILL.md`）が同じ手順で進めます。
+uto-usui.com はエックスサーバーに置いています。公開は CI ではなく手元の Mac から行います。ふだんは、master にマージすると手元の launchd が 5 分以内に出します（下の「自動デプロイ」）。手で出すときは CLI を使うか、Claude Code に「デプロイして」と頼めば、スキル `xserver-sync`（`.claude/skills/xserver-sync/SKILL.md`）が同じ手順で進めます。
 
 ## 最初の準備
 
-1 回だけやります。2026-10-25 の時点で 1 と 2 は済んでいます。
+1 回だけやります。サーバー名・鍵・ポートなどの手元の値はリポジトリに書かず、`.xserver.json` にだけ置きます。
 
-1. SSH を有効にして、公開鍵を登録する。鍵は `~/.ssh/<鍵のファイル>` です（別の鍵を使うときは `XSERVER_SSH_KEY` で渡します）。API での登録の手順は、グローバルのスキル `xserver` にあります。
-2. つながるかを確かめる。
-
-   ```bash
-   ssh -i ~/.ssh/<鍵のファイル> -p <SSH のポート> <サーバー ID>@<サーバー ID>.xsrv.jp 'ls ~/uto-usui.com/public_html'
-   ```
-
-3. リポジトリの直下に `.xserver.json` を作る（`.gitignore` に入っているので、コミットされません）。
+1. エックスサーバーで SSH を有効にして、公開鍵を登録する。
+2. リポジトリの直下に `.xserver.json` を作る（`.gitignore` に入っているので、コミットされません）。`<…>` は手元の値に置き換えます。
 
    ```json
    {
      "servername": "<サーバー ID>.xsrv.jp",
      "domain": "uto-usui.com",
      "deploy_path": "/home/<サーバー ID>/uto-usui.com/public_html",
-     "deploy_source": "./dist"
+     "deploy_source": "./dist",
+     "ssh_key": "~/.ssh/<鍵のファイル>",
+     "ssh_port": "<SSH のポート>",
+     "error_log_command": ["<エラーログを出すコマンド>", "<引数>"]
    }
    ```
+
+   `error_log_command` は任意です。直近のエラーログを標準出力に出すコマンドを書くと、公開後の確認のあとに出します。鍵は環境変数 `XSERVER_SSH_KEY` でも渡せます。
+
+3. つながるかを `pnpm xserver:diff` で確かめる（サーバーは変わりません）。
 
 4. `.env.example` を `.env` に写す。GA4 の ID（`PUBLIC_GA4_ID`）が入ります。`.env` がないと `xserver:deploy` は止まります。
 
@@ -38,7 +39,7 @@ pnpm xserver:deploy
 1. `pnpm build`
 2. `dist/` とサーバーの差を出す（追加・更新・削除の一覧と、確認が要る差分かどうかの判定）
 3. 反映してよいかを聞く（`--yes` を付けると聞きません）
-4. サーバー側で `public_html` を `~/backup/uto-usui.com/<日時>/` に控える（新しい 3 つを残します）
+4. サーバー側で `public_html` を控える（新しい 3 つを残します）
 5. `rsync --delete` で反映する
 6. 公開後の確認（下の `xserver:check`）
 
@@ -58,6 +59,31 @@ pnpm xserver:deploy
 
 `public_html/.htaccess` はリポジトリの `public/.htaccess` から反映されます。サーバーで直接書き換えると、次の公開で上書きされます。
 
+## 自動デプロイ
+
+手元の Mac の launchd（`com.uto-usui.auto-deploy`）が 5 分ごとに `scripts/xserver/auto-deploy.sh` を動かします。サーバーが SSH の接続元を絞っているので、GitHub Actions からは出せません。
+
+```bash
+pnpm xserver:auto:install     # 入れる・入れ直す（auto-deploy.sh を直したときも）
+pnpm xserver:auto:uninstall   # 止める
+```
+
+出すのは、次の 2 つを満たす `origin/master` の先頭だけです。
+
+1. その sha の push の CI が success。docs・README・`.claude/` だけの変更は CI が走らないので、何もせずに処理済みにします
+2. `xserver:deploy --only-if-safe` の判定が「確認なしで進めてよい」。「確認が要る」差分なら、サーバーに触れずに止めて通知します
+
+結果（公開した・止めた・失敗した）は `~/.local/state/uto-usui-auto-deploy/notify` に実行ファイルを置くと、件名と本文を引数で受け取れます。通知の送り先や token はリポジトリに置きません。止めたり失敗したりした sha は、次の回からやり直しません。fetch や `gh api` が一時的に失敗したときと、`pnpm install` に失敗したときだけ、次の回にやり直します。公開後の確認に ✖ が出ても自動では戻さないので、通知にある控えの名前で `pnpm xserver:rollback` します。
+
+| 場所 | 中身 |
+| --- | --- |
+| `~/.local/state/uto-usui-auto-deploy/repo` | デプロイ用のクローン（HTTPS、読むだけ）。作業用のリポジトリには触れません |
+| `~/.local/state/uto-usui-auto-deploy/last-sha` | 最後に処理した sha |
+| `~/.local/state/uto-usui-auto-deploy/auto-deploy.sh` | 動いているスクリプト。install のときに写します |
+| `~/Library/Logs/uto-usui/auto-deploy.log` | ログ |
+
+反映せずに試すときは `bash ~/.local/state/uto-usui-auto-deploy/auto-deploy.sh --dry-run` です。Mac がスリープ中や電源が切れているときは動かず、起きたときに追いつきます。自動ではエラーログを取りません（取るコマンドが認証を求めることがあるため）。
+
 ## 戻し方
 
 ```bash
@@ -75,15 +101,15 @@ pnpm xserver:rollback 20261025-120000    # その控えに戻す（確認が出�
 | `pnpm xserver:diff` | `dist/` とサーバーの差と判定。`--json` で機械向けの出力 |
 | `pnpm xserver:check` | 主な URL（`/`、sitemap、robots.txt、`og.jpg`、`sw.js`、404、`http://`・`www.`・`/index.html` からの転送、応答ヘッダー、`8180/` の CORS）を確かめ、エラーログの直近 20 行を出す |
 
-エラーログはエックスサーバーの API で取ります。API キーは パスワード管理アプリ からグローバルのスキル `xserver` の `xs-api.sh` が読みます。
+エラーログは、`.xserver.json` の `error_log_command` を書いたときだけ取ります。
 
 ## よくあるエラー
 
 | 出力 | 原因と直し方 |
 | --- | --- |
-| `Permission denied (publickey)` | SSH が無効か、鍵が登録されていません。グローバルのスキル `xserver` で `GET /v1/server/<サーバー ID>.xsrv.jp/ssh` を見て、有効にするか鍵を登録します。鍵のファイル名が違うときは `XSERVER_SSH_KEY` で渡します |
-| `Connection closed` / `Connection timed out` | SSH の接続元の制限が on なので、許していない回線からはつながりません。いつもの回線から実行します |
-| `missing:password-manager(...)` | エラーログを取るときに API キーを読めませんでした。パスワード管理アプリ のロックを解除するか、item（`<パスワード管理アプリの項目>`）があるかを確かめます。公開そのものは SSH だけで済むので、ここで止まっても反映は終わっています |
+| `Permission denied (publickey)` | SSH が無効か、鍵が登録されていません。エックスサーバーの設定を確かめます。鍵の場所が違うときは `.xserver.json` の `ssh_key` か `XSERVER_SSH_KEY` で渡します |
+| `Connection closed` / `Connection timed out` | サーバーが SSH の接続元を絞っているので、許していない回線からはつながりません。いつもの回線から実行します |
+| `エラーログを取れませんでした` | `error_log_command` が失敗しました。公開そのものは SSH だけで済むので、ここで止まっても反映は終わっています |
 | `PUBLIC_GA4_ID がありません` | `.env` を作ります（最初の準備の 4） |
 | `確認に答えられない環境です` | 端末でない所から `xserver:deploy` を呼んでいます。差分を読んで判断したうえで `--yes` を付けます |
 | `robots.txt` など名前の変わらないファイルが古いまま | X アクセラレータが `.htaccess` の Expires の期間だけ覚えています。サーバーキャッシュは off なので、API の削除（`DELETE /server-cache/...`）は効きません。`robots.txt` と sitemap は 1 時間にしてあるので待ちます。HTML と `sw.js` は `no-cache` なので起きません |
