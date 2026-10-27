@@ -59,7 +59,7 @@ fi
 trap 'rmdir "$LOCK" 2>/dev/null || true' EXIT
 
 if [ ! -d "$CLONE/.git" ]; then
-    log "クローンがありません: $CLONE（pnpm xserver:auto:install）"
+    log "クローンがありません: ${CLONE}（pnpm xserver:auto:install）"
     exit 1
 fi
 cd "$CLONE"
@@ -108,13 +108,13 @@ none)
     exit 0
     ;;
 completed\ *)
-    log "CI が通っていないので出さない（$ci）"
-    notify "CI が通っていないので出しません" "$SHORT $SUBJECT（$ci）"
+    log "CI が通っていないので出さない（${ci}）"
+    notify "CI が通っていないので出しません" "$SHORT ${SUBJECT}（${ci}）"
     finish
     exit 0
     ;;
 *)
-    log "CI が終わるのを待つ（$ci）"
+    log "CI が終わるのを待つ（${ci}）"
     exit 0
     ;;
 esac
@@ -138,12 +138,12 @@ if ! grep -q -- "--only-if-safe" scripts/xserver/cli.ts; then
 fi
 if ! pnpm install --frozen-lockfile --reporter=silent; then
     log "pnpm install に失敗した。次の回にやり直す"
-    notify_once "pnpm install に失敗しました" "$SHORT $SUBJECT。次の回にやり直します。詳しくはログを見てください"
+    notify_once "pnpm install に失敗しました" "$SHORT ${SUBJECT}。次の回にやり直します。詳しくはログを見てください"
     exit 1
 fi
 if ! pnpm build >/dev/null; then
     log "ビルドに失敗したので出さない"
-    notify "ビルドに失敗しました" "$SHORT $SUBJECT。詳しくはログを見てください"
+    notify "ビルドに失敗しました" "$SHORT ${SUBJECT}。詳しくはログを見てください"
     finish
     exit 1
 fi
@@ -171,16 +171,16 @@ case "$code" in
     ;;
 3)
     log "確認が要る差分なので出さない"
-    notify "確認が要る差分なので止めました" "$SHORT $SUBJECT。Claude Code に「デプロイして」と頼むと、差分を見て確認を取ります"
+    notify "確認が要る差分なので止めました" "$SHORT ${SUBJECT}。Claude Code に「デプロイして」と頼むと、差分を見て確認を取ります"
     ;;
 4)
     log "公開後の確認に ✖ がある"
-    notify "公開後の確認に ✖ があります" "$SHORT $SUBJECT。戻すなら pnpm xserver:rollback ${backup:-<控えの名前>}"
+    notify "公開後の確認に ✖ があります" "$SHORT ${SUBJECT}。戻すなら pnpm xserver:rollback ${backup:-<控えの名前>}"
     ;;
 *)
     # 反映の途中で落ちたかもしれない。やり直すたびに控えが増えて古い控えが消えるので、自動ではやり直さない
-    log "公開に失敗した（終了コード $code）"
-    notify "公開に失敗しました" "$SHORT $SUBJECT。${backup:+戻すなら pnpm xserver:rollback $backup。}詳しくはログを見てください"
+    log "公開に失敗した（終了コード ${code}）"
+    notify "公開に失敗しました" "$SHORT ${SUBJECT}。${backup:+戻すなら pnpm xserver:rollback ${backup}。}詳しくはログを見てください"
     ;;
 esac
 finish
